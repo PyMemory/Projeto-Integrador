@@ -1,7 +1,7 @@
 CREATE TABLE info_alunos(  
     idAluno int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nomeAluno varchar(100),
-    turmaAluno varchar(50)
+    turmaAluno char(1)
 );
 USE defaultdb;
 CREATE TABLE info_profs(
