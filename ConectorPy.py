@@ -9,10 +9,5 @@ def mysql_connection(host, user, passwd, database=None):
     )
     return connection
 
-connection = mysql_connection('host','root', 'passwd', 'database')
-
-query = '''
-'''
-
-cursor = connection.cursor()
-cursor.execute(query)
+connection = mysql_connection('pi-2024-omateocortez.c.aivencloud.com','avnadmin',
+                            'AVNS_mSrmiLQWmgRL7sxRVJ2', 'defaultdb')
