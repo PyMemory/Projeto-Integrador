@@ -7,5 +7,7 @@ USE defaultdb;
 CREATE TABLE info_profs(
     idProf INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nomeProf VARCHAR(150),
-    turmaProf CHAR(1) NOT NULL
+    turmaProf CHAR(1) NOT NULL,
+    FOREIGN KEY (turmaProf)
+    REFERENCES info_alunos(turmaAluno)
 );
