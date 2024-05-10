@@ -36,14 +36,11 @@ VALUES('Davi','A'),
 ('Matheus Hollosi','G');
 
 
-
-
-
-INSERT INTO info_profs(nomeProf, turmaProf)
+INSERT INTO tb_funcionario(nomeProf, turmaProf, funcao)
 VALUES
-('Professora Keli', 'A'),
-('Professora Katia', 'B'),
-('Professora Valéria', 'C'),
-('Professora Thaiz', 'D'),
-('Professora Isabela', 'E'),
-('Professora Waleska', 'G');
+('Keli', 'A'),
+('Katia', 'B'),
+('Valéria', 'C'),
+('Thaiz', 'D'),
+('Isabela', 'E'),
+('Waleska', 'G');
