@@ -1,0 +1,19 @@
+erDiagrama
+  entidade Professores {
+    professor_id: int PK
+    nome: varchar
+    disciplina: varchar
+  }
+  entidade Turmas {
+    turma_id: int PK
+    serie: varchar
+    turno: varchar
+  }
+  entidade Alunos {
+    aluno_id: int PK
+    nome: varchar
+    data_nascimento: date
+  }
+
+  relacionamento "Leciona" 1:N Professores -> Turmas
+  relacionamento "Matriculado" N:M Alunos -> Turmas
