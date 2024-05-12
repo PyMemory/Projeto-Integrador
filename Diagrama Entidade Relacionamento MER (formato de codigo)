@@ -1,19 +1,22 @@
 erDiagrama
-  entidade Professores {
-    professor_id: int PK
-    nome: varchar
-    disciplina: varchar
-  }
-  entidade Turmas {
-    turma_id: int PK
-    serie: varchar
-    turno: varchar
-  }
-  entidade Alunos {
-    aluno_id: int PK
-    nome: varchar
-    data_nascimento: date
-  }
+  Entidade turmas: Representa uma turma da escola.
+  Atributos:
+  idTurma (INT): identificador único da classe (PK)
+  turma (CHAR(1)): Nome da turma (ex., 'A', 'B', 'C')
+  Entidade tb_alunos: Representa um aluno matriculado na escola.
+  Atributos:
+  idAluno (INT): Identificador único do aluno (PK)
+  nomeAluno (VARCHAR(255)): Nome do aluno
+  turmaAluno (CHAR(1)): FK referente à turma a que o aluno pertence.
+  Entidade tb_Funcionários: Representa um funcionário que trabalha na escola.
+  Atributos:
+  idFunc (INT): identificador exclusivo do membro da equipe (PK)
+  nomeFunc (VARCHAR(255)): Nome do membro da equipe
+  turmaFunc (CHAR(1)): FK referente à classe (turma) à qual o Funcionário está associado (opcional)
+  funcao (VARCHAR(255)): Função do membro da equipe (o padrão é "Professor")
 
-  relacionamento "Leciona" 1:N Professores -> Turmas
-  relacionamento "Matriculado" N:M Alunos -> Turmas
+Relacionamento Funcionario -> Turmas 1:N (Um-para-muitos): um Funcionario pode pertencer a varios turmas ao mesmo tempo (um funcionario para muitas turmas).
+Relacionamento Turma -> Aluno 1:N (Um-para-muitos): Uma turma pode ter muitos alunos matriculados (uma turma para muitos alunos). 
+Isto é reforçado pela FK turmaAluno na tabela tb_alunos referenciando a turma na tabela turmas.
+Relacionamento Turma -> Funcionario 1:N (Um-para-muitos): Uma turma pode ter vários funcionários associados a ela (uma turma para muitos funcionários). 
+Isto é reforçado pela FK turmaFunc na tabela tb_funcionarios referenciando a turma na tabela turmas. (Associação opcional)
