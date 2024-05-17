@@ -10,10 +10,10 @@ CINZA = (192, 192, 192)
 class JogoMemoria:
     def __init__(self):
         pygame.init()
-        self.largura_tela = 800
-        self.altura_tela = 600
-        self.tela = pygame.display.set_mode((self.largura_tela, self.altura_tela))
-        pygame.display.set_caption("Jogo da Memória")
+        self.largura_tela = 560
+        self.altura_tela = 245
+        self.tela = pygame.display.set_mode((self.largura_tela, self.altura_tela), pygame.RESIZABLE)
+        pygame.display.set_caption("P Y M E M O R Y")
         self.clock = pygame.time.Clock()
 
         # Configurações do jogo
@@ -26,6 +26,9 @@ class JogoMemoria:
         self.largura_cartao = 100
         self.altura_cartao = 100
         self.espacamento = 10
+
+        # Configurações do texto
+        self.tamanho_fonte = 50
 
         # Inicializa o estado do jogo
         self.grid = self.criar_grade_cartas()
@@ -113,7 +116,7 @@ class JogoMemoria:
                 cor = VERDE if carta['revelado'] else CINZA
                 pygame.draw.rect(self.tela, cor, carta['rect'])
                 if carta['revelado']:
-                    fonte = pygame.font.Font(None, 36)
+                    fonte = pygame.font.Font(None, self.tamanho_fonte)
                     texto = fonte.render(carta['numero'], True, PRETO)
                     texto_rect = texto.get_rect(center=carta['rect'].center)
                     self.tela.blit(texto, texto_rect)
