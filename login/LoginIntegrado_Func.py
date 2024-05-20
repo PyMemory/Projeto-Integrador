@@ -21,14 +21,14 @@ def carregar_opcoes():
 
         cursor = conexao.cursor()
 
-        # Consulta SQL para selecionar os nomes dos alunos e suas turmas da tabela tb_alunos
+        # Consulta SQL para selecionar os nomes dos funcionários e suas turmas da tabela tb_funcionarios
         cursor.execute("SELECT nomeFunc, turmaFunc FROM tb_funcionarios ORDER BY nomeFunc")
         resultado = cursor.fetchall()
 
-        # Atualizando as opções no menu suspenso com os nomes dos alunos e suas turmas
+        # Atualizando as opções no menu suspenso com os nomes dos funcionários e suas turmas
         opcoes.clear()
         for row in resultado:
-            opcao = f"{row[0]} - {row[1]}"  # Concatenando o nome do aluno e sua turma
+            opcao = f"{row[0]} - {row[1]}"  # Concatenando o nome do funcionário e sua turma
             opcoes.append(opcao)
 
         variable.set(opcoes[0])
