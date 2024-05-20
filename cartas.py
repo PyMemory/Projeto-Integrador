@@ -10,9 +10,9 @@ CINZA = (192, 192, 192)
 class JogoMemoria:
     def __init__(self):
         pygame.init()
-        self.largura_tela = 560
-        self.altura_tela = 245
-        self.tela = pygame.display.set_mode((self.largura_tela, self.altura_tela), pygame.RESIZABLE)
+        self.largura_tela = 1200
+        self.altura_tela = 671
+        self.tela = pygame.display.set_mode((self.largura_tela, self.altura_tela))
         pygame.display.set_caption("P Y M E M O R Y")
         self.clock = pygame.time.Clock()
 
@@ -23,12 +23,12 @@ class JogoMemoria:
         self.MAX_TENTATIVAS = 100
 
         # Configurações do cartão
-        self.largura_cartao = 100
-        self.altura_cartao = 100
-        self.espacamento = 10
+        self.largura_cartao = 216
+        self.altura_cartao = 310
+        self.espacamento = 20
 
         # Configurações do texto
-        self.tamanho_fonte = 50
+        self.tamanho_fonte = 90
 
         # Inicializa o estado do jogo
         self.grid = self.criar_grade_cartas()
@@ -111,13 +111,13 @@ class JogoMemoria:
                     carta['revelado'] = False
                 self.cartao_revelado.clear()
 
-            self.tela.fill(BRANCO)
+            self.tela.fill(VERDE)
             for carta in self.cartoes:
-                cor = VERDE if carta['revelado'] else CINZA
+                cor = BRANCO if carta['revelado'] else CINZA
                 pygame.draw.rect(self.tela, cor, carta['rect'])
                 if carta['revelado']:
-                    fonte = pygame.font.Font(None, self.tamanho_fonte)
-                    texto = fonte.render(carta['numero'], True, PRETO)
+                    fonte = pygame.font.Font("SuperMario256.ttf", self.tamanho_fonte)
+                    texto = fonte.render(carta['numero'], True, VERDE)
                     texto_rect = texto.get_rect(center=carta['rect'].center)
                     self.tela.blit(texto, texto_rect)
 
