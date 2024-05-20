@@ -20,6 +20,7 @@ UNIQUE KEY(idTurma)
 CREATE TABLE tb_alunos(
     idAluno INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nomeAluno VARCHAR(255) NOT NULL,
+    pontuacao INT,
     turmaAluno CHAR(1),
         FOREIGN KEY (turmaAluno) REFERENCES turmas(turma)
 );
