@@ -12,14 +12,13 @@ class JogoMemoria:
         pygame.init()
         self.largura_tela = 1200
         self.altura_tela = 671
-        self.tela = pygame.display.set_mode((self.largura_tela, self.altura_tela))
+        self.tela = pygame.display.set_mode((self.largura_tela, self.altura_tela), pygame.RESIZABLE)
         pygame.display.set_caption("P Y M E M O R Y")
         self.clock = pygame.time.Clock()
 
         # Configurações do jogo
         self.NUM_LINHAS = 2
         self.NUM_COLUNAS = 5
-        self.NUMEROS_CARTAO = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         self.MAX_TENTATIVAS = 100
 
         # Configurações do cartão
@@ -31,6 +30,7 @@ class JogoMemoria:
         self.tamanho_fonte = 90
 
         # Inicializa o estado do jogo
+        self.numero_escolhido = 20 # Número escolhido pelo jogador
         self.grid = self.criar_grade_cartas()
         self.cartoes = self.criar_cartas()
         self.tentativas = 0
@@ -41,14 +41,19 @@ class JogoMemoria:
         self.timer_end = 0
 
     def criar_grade_cartas(self):
-        num = (self.NUMEROS_CARTAO * 2)[:self.NUM_LINHAS * self.NUM_COLUNAS // 2]
-        num = num * 2
-        random.shuffle(num)
+        numeros_cartao = [self.numero_escolhido]
+        for _ in range((self.NUM_LINHAS * self.NUM_COLUNAS // 2) - 1):
+            numero = random.randint(1, 100)
+            while numero == self.numero_escolhido:
+                numero = random.randint(1, 100)
+            numeros_cartao.append(numero)
+        numeros_cartao *= 2  # Duplica os números para formar os pares
+        random.shuffle(numeros_cartao)
         grade = []
         for _ in range(self.NUM_LINHAS):
             linha = []
             for _ in range(self.NUM_COLUNAS):
-                numero = num.pop()
+                numero = numeros_cartao.pop()
                 linha.append(numero)
             grade.append(linha)
         return grade
@@ -72,6 +77,7 @@ class JogoMemoria:
                     self.verificar_correspondencia()
 
     def verificar_correspondencia(self):
+        self.get_tentativas()
         carta1, carta2 = self.cartao_revelado
         if carta1['numero'] == carta2['numero']:
             self.cartao_revelado.clear()
@@ -95,6 +101,16 @@ class JogoMemoria:
         if self.tentativas >= self.MAX_TENTATIVAS:
             pygame.display.set_caption("Fim de jogo. Você atingiu o limite de tentativas.")
 
+    def get_tentativas(self):
+        self.tentativas += 1
+        return self.tentativas
+
+    def trocar_cartoes(self, numero):
+        if len(self.cartao_revelado) == 2:
+            for carta in self.cartao_revelado:
+                carta['numero'] = numero
+            self.cartao_revelado.clear()
+
     def executar(self):
         while True:
             for event in pygame.event.get():
@@ -104,6 +120,15 @@ class JogoMemoria:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     self.cartao_clicado(x, y)
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE and len(self.cartao_revelado) == 2:
+                        numero_trocado = int(input("Digite o número para trocar as cartas: "))
+                        self.trocar_cartoes(numero_trocado)
+                    elif event.key == pygame.K_n:
+                        novo_numero = int(input("Digite o novo número: "))
+                        self.numero_escolhido = novo_numero
+                        self.grid = self.criar_grade_cartas()
+                        self.cartoes = self.criar_cartas()
 
             if self.timer_started and pygame.time.get_ticks() >= self.timer_end:
                 self.timer_started = False
@@ -116,14 +141,14 @@ class JogoMemoria:
                 cor = BRANCO if carta['revelado'] else CINZA
                 pygame.draw.rect(self.tela, cor, carta['rect'])
                 if carta['revelado']:
-                    fonte = pygame.font.Font("SuperMario256.ttf", self.tamanho_fonte)
-                    texto = fonte.render(carta['numero'], True, VERDE)
+                    fonte = pygame.font.Font('SuperMario256.ttf', self.tamanho_fonte)
+                    texto = fonte.render(str(carta['numero']), True, VERDE)
                     texto_rect = texto.get_rect(center=carta['rect'].center)
                     self.tela.blit(texto, texto_rect)
 
             pygame.display.flip()
             self.clock.tick(60)
 
-if __name__ == "__main__":
-    jogo = JogoMemoria()
-    jogo.executar()
+# Executando o jogo
+jogo = JogoMemoria()
+jogo.executar()
