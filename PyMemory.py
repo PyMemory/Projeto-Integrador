@@ -5,7 +5,9 @@ from tkinter import *
 from tkinter import messagebox
 import mysql.connector
 
-def tkinterfunc(screen):
+
+
+def tkinterfunc():
     def option_selected(*args):
         selected_option = variable.get()
     # Aqui você pode adicionar o código para lidar com a opção selecionada, como realizar uma consulta ao banco de dados para obter mais informações sobre a opção selecionada.
@@ -17,7 +19,7 @@ def tkinterfunc(screen):
                 host="pi-2024-omateocortez.c.aivencloud.com",
                 port="22705",
                 user="avnadmin",
-                password="AVNS_mSrmiLQWmgRL7sxRVJ2",
+                password="AVNS_6u-r-XwHHM_Ryaqe3ZP",
                 database="PyMemoryDB"
             )
 
@@ -91,9 +93,11 @@ def tkinterfunc(screen):
         state="normal", takefocus=TRUE, width="10", wraplength="0")
     my_button.pack(pady=10)
 
+    exibir_tela_login = False
+
     root.mainloop()
 
-def tkinter(screen):
+def tkinter():
     
     def option_selected(*args):
         selected_option = variable.get()
@@ -106,7 +110,7 @@ def tkinter(screen):
                 host="pi-2024-omateocortez.c.aivencloud.com",
                 port="22705",
                 user="avnadmin",
-                password="AVNS_mSrmiLQWmgRL7sxRVJ2",
+                password="AVNS_6u-r-XwHHM_Ryaqe3ZP",
                 database="PyMemoryDB"
             )
 
@@ -130,6 +134,9 @@ def tkinter(screen):
         except mysql.connector.Error as error:
             messagebox.showerror("Erro", f"Erro ao conectar ao banco de dados: {error}")
 
+    def abrir_tela_config():
+        root.destroy()
+        tela_config(screen)
 
     # Criando a janela
     root = tk.Tk()
@@ -176,8 +183,8 @@ def tkinter(screen):
 
     # Botão de Confirmar 
     my_button = Button(root, text="Confirmar", activebackground="green", activeforeground="white", anchor="center", bg="systembuttonface", bd="2", default="disabled",
-        disabledforeground="green", font=("Helvetica", 12), fg="green",justify="center",overrelief="raised",relief="raised",
-        state="normal", takefocus=TRUE, width="10", wraplength="0")
+        disabledforeground="green", font=("Helvetica", 18), fg="green",justify="center",overrelief="raised",relief="raised",
+        state="normal", takefocus=TRUE, width="10", wraplength="0", command=abrir_tela_config)
     my_button.pack(pady=10)
 
     root.mainloop()
@@ -188,48 +195,22 @@ def tela_config(screen):
     altura = 671
     tela = pygame.display.set_mode((largura, altura))
 
-
     pygame.display.set_caption("Tela de Configuração")
     imagem = pygame.image.load("telalogins.png")
     screen.blit(imagem, (0, 0))
 
-    cor_botao = (0, 100, 0)  
     cor_texto = (255, 255, 255)
     
-
     fonte = pygame.font.Font("RetroMario-Regular.otf", 55)
-
-
-    texto_botaovoltar2 = fonte.render("VOLTAR", True, cor_texto) 
-    largura_botaovoltar2 = 220
-    altura_botaovoltar2 = 50
-    posicao_botaovoltar2 = (5, 5)
-    retangulo_botaovoltar2 = pygame.Rect(posicao_botaovoltar2, (largura_botaovoltar2, altura_botaovoltar2))
-
-    pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar2)
-    texto_retangulovoltar2 = texto_botaovoltar2.get_rect(center=retangulo_botaovoltar2.center)
-    tela.blit(texto_botaovoltar2, texto_retangulovoltar2)
-
     
-
-    exibir_main = False
-
     while True:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            elif evento.type == pygame.MOUSEBUTTONDOWN:
-                if retangulo_botaovoltar2.collidepoint(evento.pos):
-                    exibir_main = True
 
+            pygame.display.flip()
 
-        pygame.display.flip()
-
-        if exibir_main :
-            main(screen)
-            break
- 
 def tela_login(screen):  
 
     largura = 1200
@@ -303,12 +284,12 @@ def tela_login(screen):
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if retangulo_botao3.collidepoint(evento.pos):
                     exibir_tkinter = True  
-                    exibir_tela_login = False
                 elif retangulo_botao4.collidepoint(evento.pos):
                     exibir_tkinterfunc = True
                     exibir_tela_login = False
                 elif retangulo_botaovoltar1.collidepoint(evento.pos):
                     exibir_main = True
+                
 
 
         pygame.display.flip()
@@ -323,7 +304,7 @@ def tela_login(screen):
             tela_login(screen)
             break
         elif exibir_tkinter :
-            tkinter(screen)
+            tkinter()
             break
         elif exibir_tkinterfunc:
             tkinterfunc(screen)
