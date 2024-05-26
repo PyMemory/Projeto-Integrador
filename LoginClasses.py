@@ -73,7 +73,7 @@ class Login:
                 host="pi-2024-omateocortez.c.aivencloud.com",
                 port="22705",
                 user="avnadmin",
-                password="AVNS_mSrmiLQWmgRL7sxRVJ2",
+                password="AVNS_6u-r-XwHHM_Ryaqe3ZP",
                 database="PyMemoryDB"
             )
 

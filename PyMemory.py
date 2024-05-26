@@ -5,7 +5,14 @@ from tkinter import *
 from tkinter import messagebox
 import mysql.connector
 
+pygame.init()
+pygame.mixer.init() # Inicializando a música
 
+musica_fundo = pygame.mixer.music.load("musicafundo.mp3") # Carregando a música no projeto.
+musica_fundo = pygame.mixer.music.set_volume(0.4) # Número de 0 à 1.0.
+musica_fundo = pygame.mixer.music.play(-1) # Colocando a música para rodar num loop.
+
+clique = pygame.mixer.Sound("cliquebolha.mp3")
 
 def tkinterfunc():
     def option_selected(*args):
@@ -136,7 +143,7 @@ def tkinter():
 
     def abrir_tela_config():
         root.destroy()
-        tela_config(screen)
+        tela_teste(screen)
 
     # Criando a janela
     root = tk.Tk()
@@ -189,13 +196,13 @@ def tkinter():
 
     root.mainloop()
 
-def tela_config(screen):
+def tela_teste(screen):
 
     largura = 1200
     altura = 671
     tela = pygame.display.set_mode((largura, altura))
 
-    pygame.display.set_caption("Tela de Configuração")
+    pygame.display.set_caption("Tela de Teste após o TKINTER")
     imagem = pygame.image.load("telalogins.png")
     screen.blit(imagem, (0, 0))
 
@@ -211,6 +218,54 @@ def tela_config(screen):
 
             pygame.display.flip()
 
+def tela_config(screen):
+
+    largura = 1200
+    altura = 671
+    tela = pygame.display.set_mode((largura, altura))
+    pygame.display.set_caption("PAINEL DE CONFIGURAÇÕES")
+    imagem = pygame.image.load("telalogins.png")
+    screen.blit(imagem, (0, 0))
+
+    cor_botao = (0, 100, 0)  
+    cor_texto = (255, 255, 255)  
+
+    fonte = pygame.font.Font("RetroMario-Regular.otf", 55)
+
+    texto_botaovoltar4 = fonte.render("VOLTAR", True, cor_texto) 
+    largura_botaovoltar4 = 220
+    altura_botaovoltar4 = 50
+    posicao_botaovoltar4 = (5, 5)
+    retangulo_botaovoltar4 = pygame.Rect(posicao_botaovoltar4, (largura_botaovoltar4, altura_botaovoltar4))
+
+    pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar4)
+    texto_retangulovoltar4 = texto_botaovoltar4.get_rect(center=retangulo_botaovoltar4.center)
+    tela.blit(texto_botaovoltar4, texto_retangulovoltar4)
+
+    pygame.display.flip()
+
+    exibir_tela_config = False
+    exibir_main = False
+
+    while True:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                if retangulo_botaovoltar4.collidepoint(evento.pos):
+                    clique.play()
+                    exibir_main = True
+
+        pygame.display.flip()
+
+        if exibir_tela_config:
+            tela_config(screen)
+            break
+        elif exibir_main:
+            main(screen)
+            break  
+
 def tela_login(screen):  
 
     largura = 1200
@@ -223,8 +278,8 @@ def tela_login(screen):
     cor_botao = (0, 100, 0)  
     cor_texto = (255, 255, 255)  
 
-    fonte = pygame.font.Font("RetroMario-Regular.otf", 55) 
-    
+    fonte = pygame.font.Font("RetroMario-Regular.otf", 55)
+ 
 
 #BOTÃO DE LOGIN DE ALUNO
 
@@ -270,7 +325,6 @@ def tela_login(screen):
    # Atualiza a tela
     pygame.display.flip()
 
-    exibir_tela_func = False
     exibir_main = False
     exibir_tkinter = False
     exibir_tkinterfunc = False
@@ -283,21 +337,19 @@ def tela_login(screen):
                 sys.exit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if retangulo_botao3.collidepoint(evento.pos):
+                    clique.play()
                     exibir_tkinter = True  
                 elif retangulo_botao4.collidepoint(evento.pos):
+                    clique.play()
                     exibir_tkinterfunc = True
-                    exibir_tela_login = False
                 elif retangulo_botaovoltar1.collidepoint(evento.pos):
+                    clique.play()
                     exibir_main = True
                 
 
-
         pygame.display.flip()
 
-        if exibir_tela_func:
-            tela_func(screen)
-            break
-        elif exibir_main :
+        if exibir_main:
             main(screen)
             break
         elif exibir_tela_login:
@@ -307,55 +359,10 @@ def tela_login(screen):
             tkinter()
             break
         elif exibir_tkinterfunc:
-            tkinterfunc(screen)
-            break
-
-def tela_func(screen):
-    
-    largura = 1200
-    altura = 671
-    tela = pygame.display.set_mode((largura, altura))
-    pygame.display.set_caption("Tela Login Funcionário")
-    imagem = pygame.image.load("telalogins.png")
-    screen.blit(imagem, (0, 0))
-
-    cor_botao = (0, 100, 0)  
-    cor_texto = (255, 255, 255)  
-
-    fonte = pygame.font.Font("RetroMario-Regular.otf", 55)
-
-    texto_botaovoltar4 = fonte.render("VOLTAR", True, cor_texto) 
-    largura_botaovoltar4 = 220
-    altura_botaovoltar4 = 50
-    posicao_botaovoltar4 = (5, 5)
-    retangulo_botaovoltar4 = pygame.Rect(posicao_botaovoltar4, (largura_botaovoltar4, altura_botaovoltar4))
-
-
-    pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar4)
-    texto_retangulovoltar4 = texto_botaovoltar4.get_rect(center=retangulo_botaovoltar4.center)
-    tela.blit(texto_botaovoltar4, texto_retangulovoltar4)
-
-    exibir_tela_login = False
-
-    while True:
-        for evento in pygame.event.get():
-            if evento.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif evento.type == pygame.MOUSEBUTTONDOWN:
-                if retangulo_botaovoltar4.collidepoint(evento.pos):
-                    exibir_tela_login = True
-
-
-        pygame.display.flip()
-
-        if exibir_tela_login:
-            tela_login(screen)
+            tkinterfunc()
             break
 
 def main(screen):  
-    pygame.init()
-
     
 #TAMANHO DA TELA
     
@@ -382,8 +389,6 @@ def main(screen):
     posicao_botao1 = (800, 65)
     retangulo_botao1 = pygame.Rect(posicao_botao1, (largura_botao1, altura_botao1))  
     
-    
-
 #BOTÃO DE CONFIG
 
     texto_botao2 = fonte.render("CONFIGURAÇÕES", True, cor_texto)  
@@ -403,9 +408,12 @@ def main(screen):
                 sys.exit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if retangulo_botao1.collidepoint(evento.pos):
+                    clique.play()
                     exibir_tela_login = True
                 elif retangulo_botao2.collidepoint(evento.pos):
+                    clique.play()
                     exibir_tela_config = True
+
                     
 
         tela.blit(imagem, (0, 0))
