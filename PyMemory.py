@@ -12,9 +12,13 @@ musica_fundo = pygame.mixer.music.load("musicafundo.mp3") # Carregando a música
 musica_fundo = pygame.mixer.music.set_volume(0.4) # Número de 0 à 1.0.
 musica_fundo = pygame.mixer.music.play(-1) # Colocando a música para rodar num loop.
 
-clique = pygame.mixer.Sound("cliquebolha.mp3")
+som_clique = pygame.mixer.Sound("cliquebolha.mp3")
+som_ligado = True
 
 def tkinterfunc():
+
+    global som_ligado
+
     def option_selected(*args):
         selected_option = variable.get()
     # Aqui você pode adicionar o código para lidar com a opção selecionada, como realizar uma consulta ao banco de dados para obter mais informações sobre a opção selecionada.
@@ -105,6 +109,8 @@ def tkinterfunc():
     root.mainloop()
 
 def tkinter():
+
+    global som_ligado
     
     def option_selected(*args):
         selected_option = variable.get()
@@ -219,6 +225,8 @@ def tela_teste(screen):
             pygame.display.flip()
 
 def tela_config(screen):
+    
+    global som_ligado
 
     largura = 1200
     altura = 671
@@ -227,10 +235,18 @@ def tela_config(screen):
     imagem = pygame.image.load("telalogins.png")
     screen.blit(imagem, (0, 0))
 
+# DEFININDO CORES DOS BOTÕES E TEXTOS
+
     cor_botao = (0, 100, 0)  
     cor_texto = (255, 255, 255)  
+    cor_botaosom = (134, 235, 153)
+    cor_textosom = (0, 100, 0)
+
+# CARREGANDO A FONTE
 
     fonte = pygame.font.Font("RetroMario-Regular.otf", 55)
+
+# BOTÃO PARA VOLTAR PRA TELA INICIAL
 
     texto_botaovoltar4 = fonte.render("VOLTAR", True, cor_texto) 
     largura_botaovoltar4 = 220
@@ -238,12 +254,74 @@ def tela_config(screen):
     posicao_botaovoltar4 = (5, 5)
     retangulo_botaovoltar4 = pygame.Rect(posicao_botaovoltar4, (largura_botaovoltar4, altura_botaovoltar4))
 
-    pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar4)
-    texto_retangulovoltar4 = texto_botaovoltar4.get_rect(center=retangulo_botaovoltar4.center)
-    tela.blit(texto_botaovoltar4, texto_retangulovoltar4)
+# CAIXA DE TEXTO PARA IDENTIFICAÇÃO DA FUNÇÃO DE CADA BOTÃO
 
-    pygame.display.flip()
+    texto_botaosong = fonte.render("MÚSICA: ", True, cor_textosom) 
+    largura_botaosong = 280
+    altura_botaosong = 80
+    posicao_botaosong = (200, 200)
+    retangulo_botaosong = pygame.Rect(posicao_botaosong, (largura_botaosong, altura_botaosong))
 
+# CAIXA DE TEXTO PARA IDENTIFICAÇÃO DA FUNÇÃO DE CADA BOTÃO
+
+    texto_botaosound = fonte.render("EFEITO SONORO: ", True, cor_textosom) 
+    largura_botaosound = 480
+    altura_botaosound = 80
+    posicao_botaosound = (550, 200)
+    retangulo_botaosound = pygame.Rect(posicao_botaosound, (largura_botaosound, altura_botaosound))
+
+# CARREGANDO A IMAGEM DOS BOTÕES DE LIGAR E DESLIGAR MUSICA
+    
+    img_musica_on = pygame.image.load("soundon.png")
+    img_musica_off = pygame.image.load("soundoff.png")
+
+    tamanho = (130, 130)
+
+    img_musica_on = pygame.transform.scale(img_musica_on, tamanho)
+    img_musica_off = pygame.transform.scale(img_musica_off, tamanho)
+
+# CARREGANDO A IMAGEM DOS BOTÕES DE LIGAR E DESLIGAR O EFEITO SONORO
+
+    img_efeito_on = pygame.image.load("soundon.png")
+    img_efeito_off = pygame.image.load("soundoff.png")
+
+    img_efeito_on = pygame.transform.scale(img_efeito_on, tamanho)
+    img_efeito_off = pygame.transform.scale(img_efeito_off, tamanho)
+
+    musica_ligada = True # Estado inicial da música (ON)
+
+    def desligar_musica():
+        pygame.mixer.music.stop()
+
+    def ligar_musica():
+        pygame.mixer.music.play(-1)
+
+    def desenhar_interface():
+
+        tela.blit(imagem, (0, 0))
+        
+        # DESENHANDO OS BOTÕES NA TELA
+
+        pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar4)
+        texto_retangulovoltar4 = texto_botaovoltar4.get_rect(center=retangulo_botaovoltar4.center)
+        tela.blit(texto_botaovoltar4, texto_retangulovoltar4)
+
+        pygame.draw.rect(tela, cor_botaosom, retangulo_botaosong)
+        texto_retangulosong = texto_botaosong.get_rect(center=retangulo_botaosong.center)
+        tela.blit(texto_botaosong, texto_retangulosong)
+
+        pygame.draw.rect(tela, cor_botaosom, retangulo_botaosound)
+        texto_retangulosound = texto_botaosound.get_rect(center=retangulo_botaosound.center)
+        tela.blit(texto_botaosound, texto_retangulosound)
+
+        # DESENHA OS BOTÕES DE MÚSICA E DE EFEITO SONORO
+
+        if som_ligado:
+            tela.blit(img_efeito_on, (710, 300))
+        else: 
+            tela.blit(img_efeito_off, (710, 300))
+
+        
     exibir_tela_config = False
     exibir_main = False
 
@@ -253,9 +331,34 @@ def tela_config(screen):
                 pygame.quit()
                 sys.exit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
+                pos_mouse = pygame.mouse.get_pos()
+                botao_rectmusica = img_musica_on.get_rect(topleft=(270, 300))
+                botao_rectefeito = img_efeito_on.get_rect(topleft=(710, 300))
+                if botao_rectmusica.collidepoint(pos_mouse):
+                    if som_ligado:
+                        som_clique.play()
+                    if musica_ligada:
+                        desligar_musica()
+                        musica_ligada = False
+                    else:
+                        ligar_musica()
+                        musica_ligada = True
+                if botao_rectefeito.collidepoint(pos_mouse):
+                    som_ligado = not som_ligado
                 if retangulo_botaovoltar4.collidepoint(evento.pos):
-                    clique.play()
+                    if som_ligado:
+                        som_clique.play()
                     exibir_main = True
+        
+        
+        desenhar_interface()
+
+        if musica_ligada:
+            img_botao_musica = img_musica_on
+        else:
+            img_botao_musica = img_musica_off
+        
+        tela.blit(img_botao_musica, (270, 300))
 
         pygame.display.flip()
 
@@ -266,7 +369,9 @@ def tela_config(screen):
             main(screen)
             break  
 
-def tela_login(screen):  
+def tela_login(screen):
+
+    global som_ligado  
 
     largura = 1200
     altura = 671
@@ -337,13 +442,16 @@ def tela_login(screen):
                 sys.exit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if retangulo_botao3.collidepoint(evento.pos):
-                    clique.play()
+                    if som_ligado:
+                        som_clique.play()
                     exibir_tkinter = True  
                 elif retangulo_botao4.collidepoint(evento.pos):
-                    clique.play()
+                    if som_ligado:
+                        som_clique.play()
                     exibir_tkinterfunc = True
                 elif retangulo_botaovoltar1.collidepoint(evento.pos):
-                    clique.play()
+                    if som_ligado:
+                        som_clique.play()
                     exibir_main = True
                 
 
@@ -362,7 +470,9 @@ def tela_login(screen):
             tkinterfunc()
             break
 
-def main(screen):  
+def main(screen):
+
+    global som_ligado  
     
 #TAMANHO DA TELA
     
@@ -394,7 +504,7 @@ def main(screen):
     texto_botao2 = fonte.render("CONFIGURAÇÕES", True, cor_texto)  
     largura_botao2 = 515
     altura_botao2 = 80
-    posicao_botao2 = (670, 160)
+    posicao_botao2 = (645, 160)
     retangulo_botao2 = pygame.Rect(posicao_botao2, (largura_botao2, altura_botao2))  
 
 
@@ -408,10 +518,12 @@ def main(screen):
                 sys.exit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if retangulo_botao1.collidepoint(evento.pos):
-                    clique.play()
+                    if som_ligado:
+                        som_clique.play()
                     exibir_tela_login = True
                 elif retangulo_botao2.collidepoint(evento.pos):
-                    clique.play()
+                    if som_ligado:
+                        som_clique.play()
                     exibir_tela_config = True
 
                     
