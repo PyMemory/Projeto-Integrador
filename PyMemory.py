@@ -239,7 +239,7 @@ def tela_config(screen):
 
     cor_botao = (0, 100, 0)  
     cor_texto = (255, 255, 255)  
-    cor_botaosom = (134, 235, 153)
+    cor_botaosom = (121, 231, 148)
     cor_textosom = (0, 100, 0)
 
 # CARREGANDO A FONTE
@@ -288,7 +288,7 @@ def tela_config(screen):
     img_efeito_on = pygame.transform.scale(img_efeito_on, tamanho)
     img_efeito_off = pygame.transform.scale(img_efeito_off, tamanho)
 
-    musica_ligada = True # Estado inicial da música (ON)
+    musica_ligada= True
 
     def desligar_musica():
         pygame.mixer.music.stop()
