@@ -4,15 +4,16 @@ import tkinter as tk
 from tkinter import * 
 from tkinter import messagebox
 import mysql.connector
+import os
 
 pygame.init()
 pygame.mixer.init() # Inicializando a música
 
-musica_fundo = pygame.mixer.music.load("musicafundo.mp3") # Carregando a música no projeto.
+musica_fundo = pygame.mixer.music.load(os.path.join("assets", "musicafundo.mp3")) # Carregando a música no projeto.
 musica_fundo = pygame.mixer.music.set_volume(0.4) # Número de 0 à 1.0.
 musica_fundo = pygame.mixer.music.play(-1) # Colocando a música para rodar num loop.
 
-som_clique = pygame.mixer.Sound("cliquebolha.mp3")
+som_clique = pygame.mixer.Sound(os.path.join("assets", "cliquebolha.mp3"))
 som_ligado = True
 
 def tkinterfunc():
@@ -209,12 +210,12 @@ def tela_teste(screen):
     tela = pygame.display.set_mode((largura, altura))
 
     pygame.display.set_caption("Tela de Teste após o TKINTER")
-    imagem = pygame.image.load("telalogins.png")
+    imagem = pygame.image.load(os.path.join("assets", "telalogins.png"))
     screen.blit(imagem, (0, 0))
 
     cor_texto = (255, 255, 255)
     
-    fonte = pygame.font.Font("RetroMario-Regular.otf", 55)
+    fonte = pygame.font.Font(os.path.join("assets","RetroMario-Regular.otf"), 55)
     
     while True:
         for evento in pygame.event.get():
@@ -232,7 +233,7 @@ def tela_config(screen):
     altura = 671
     tela = pygame.display.set_mode((largura, altura))
     pygame.display.set_caption("PAINEL DE CONFIGURAÇÕES")
-    imagem = pygame.image.load("telalogins.png")
+    imagem = pygame.image.load(os.path.join("assets", "telalogins.png"))
     screen.blit(imagem, (0, 0))
 
 # DEFININDO CORES DOS BOTÕES E TEXTOS
@@ -244,7 +245,7 @@ def tela_config(screen):
 
 # CARREGANDO A FONTE
 
-    fonte = pygame.font.Font("RetroMario-Regular.otf", 55)
+    fonte = pygame.font.Font(os.path.join("assets","RetroMario-Regular.otf"), 55)
 
 # BOTÃO PARA VOLTAR PRA TELA INICIAL
 
@@ -272,8 +273,8 @@ def tela_config(screen):
 
 # CARREGANDO A IMAGEM DOS BOTÕES DE LIGAR E DESLIGAR MUSICA
     
-    img_musica_on = pygame.image.load("soundon.png")
-    img_musica_off = pygame.image.load("soundoff.png")
+    img_musica_on = pygame.image.load(os.path.join("assets", "soundon.png"))
+    img_musica_off = pygame.image.load(os.path.join("assets","soundoff.png"))
 
     tamanho = (130, 130)
 
@@ -282,8 +283,8 @@ def tela_config(screen):
 
 # CARREGANDO A IMAGEM DOS BOTÕES DE LIGAR E DESLIGAR O EFEITO SONORO
 
-    img_efeito_on = pygame.image.load("soundon.png")
-    img_efeito_off = pygame.image.load("soundoff.png")
+    img_efeito_on = pygame.image.load(os.path.join("assets","soundon.png"))
+    img_efeito_off = pygame.image.load(os.path.join("assets","soundoff.png"))
 
     img_efeito_on = pygame.transform.scale(img_efeito_on, tamanho)
     img_efeito_off = pygame.transform.scale(img_efeito_off, tamanho)
@@ -377,13 +378,13 @@ def tela_login(screen):
     altura = 671
     tela = pygame.display.set_mode((largura, altura))
     pygame.display.set_caption("Tela de Login")
-    imagem = pygame.image.load("telalogins.png")
+    imagem = pygame.image.load(os.path.join("assets","telalogins.png"))
     screen.blit(imagem, (0, 0))
 
     cor_botao = (0, 100, 0)  
     cor_texto = (255, 255, 255)  
 
-    fonte = pygame.font.Font("RetroMario-Regular.otf", 55)
+    fonte = pygame.font.Font(os.path.join("assets", "RetroMario-Regular.otf"), 55)
  
 
 #BOTÃO DE LOGIN DE ALUNO
@@ -484,14 +485,14 @@ def main(screen):
     
 #CARREGANDO IMAGEM DE FUNDO
     
-    imagem = pygame.image.load("inicio.png")
+    imagem = pygame.image.load(os.path.join("assets","inicio.png"))
 
 #BOTÃO DE LOGIN
 
     cor_botao = (0, 100, 0)  # Cor verde escuro para o botão
     cor_texto = (255, 255, 255)  # Cor branca para o texto
     
-    fonte = pygame.font.Font("RetroMario-Regular.otf", 55)  
+    fonte = pygame.font.Font(os.path.join("assets","RetroMario-Regular.otf"), 55)  
 
     texto_botao1 = fonte.render("LOGIN", True, cor_texto)  
     largura_botao1 = 190
