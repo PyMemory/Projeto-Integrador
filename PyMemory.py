@@ -242,7 +242,7 @@ def tela_config(screen):
 
     cor_botao = (0, 100, 0)  
     cor_texto = (255, 255, 255)  
-    cor_botaosom = (121, 231, 148)
+    cor_botaosom = (122, 186, 120)
     cor_textosom = (0, 100, 0)
 
 # CARREGANDO A FONTE
@@ -252,26 +252,30 @@ def tela_config(screen):
 # BOTÃO PARA VOLTAR PRA TELA INICIAL
 
     texto_botaovoltar4 = fonte.render("VOLTAR", True, cor_texto) 
-    largura_botaovoltar4 = 220
-    altura_botaovoltar4 = 50
+    largura_botaovoltar4 = 250
+    altura_botaovoltar4 = 65
     posicao_botaovoltar4 = (5, 5)
     retangulo_botaovoltar4 = pygame.Rect(posicao_botaovoltar4, (largura_botaovoltar4, altura_botaovoltar4))
+    corner_radius = 20
+    
 
 # CAIXA DE TEXTO PARA IDENTIFICAÇÃO DA FUNÇÃO DE CADA BOTÃO
 
-    texto_botaosong = fonte.render("MÚSICA: ", True, cor_textosom) 
+    texto_botaosong = fonte.render("MÚSICA", True, cor_textosom) 
     largura_botaosong = 280
     altura_botaosong = 80
     posicao_botaosong = (200, 200)
     retangulo_botaosong = pygame.Rect(posicao_botaosong, (largura_botaosong, altura_botaosong))
+    corner_radius = 100
 
 # CAIXA DE TEXTO PARA IDENTIFICAÇÃO DA FUNÇÃO DE CADA BOTÃO
 
-    texto_botaosound = fonte.render("EFEITO SONORO: ", True, cor_textosom) 
+    texto_botaosound = fonte.render("EFEITO SONORO", True, cor_textosom) 
     largura_botaosound = 480
     altura_botaosound = 80
     posicao_botaosound = (550, 200)
     retangulo_botaosound = pygame.Rect(posicao_botaosound, (largura_botaosound, altura_botaosound))
+    corner_radius = 100
 
 # CARREGANDO A IMAGEM DOS BOTÕES DE LIGAR E DESLIGAR MUSICA
     
@@ -303,15 +307,15 @@ def tela_config(screen):
         
         # DESENHANDO OS BOTÕES NA TELA
 
-        pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar4)
+        pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar4, border_radius=corner_radius)
         texto_retangulovoltar4 = texto_botaovoltar4.get_rect(center=retangulo_botaovoltar4.center)
         tela.blit(texto_botaovoltar4, texto_retangulovoltar4)
 
-        pygame.draw.rect(tela, cor_botaosom, retangulo_botaosong)
+        pygame.draw.rect(tela, cor_botaosom, retangulo_botaosong, border_radius=corner_radius)
         texto_retangulosong = texto_botaosong.get_rect(center=retangulo_botaosong.center)
         tela.blit(texto_botaosong, texto_retangulosong)
 
-        pygame.draw.rect(tela, cor_botaosom, retangulo_botaosound)
+        pygame.draw.rect(tela, cor_botaosom, retangulo_botaosound, border_radius=corner_radius)
         texto_retangulosound = texto_botaosound.get_rect(center=retangulo_botaosound.center)
         tela.blit(texto_botaosound, texto_retangulosound)
 
@@ -385,7 +389,8 @@ def tela_login(screen):
     largura_botao3 = 215
     altura_botao3 = 80
     posicao_botao3 = (500, 240)
-    retangulo_botao3 = pygame.Rect(posicao_botao3, (largura_botao3, altura_botao3))  
+    retangulo_botao3 = pygame.Rect(posicao_botao3, (largura_botao3, altura_botao3))
+    corner_radius = 20  
 
 
 #BOTÃO DE LOGIN FUNCIONÁRIO
@@ -395,6 +400,7 @@ def tela_login(screen):
     altura_botao4 = 80
     posicao_botao4 = (410, 350)
     retangulo_botao4 = pygame.Rect(posicao_botao4, (largura_botao4, altura_botao4)) 
+    corner_radius = 20
 
 #BOTÃO DE VOLTAR
 
@@ -403,19 +409,20 @@ def tela_login(screen):
     altura_botaovoltar1 = 50
     posicao_botaovoltar1 = (5, 5)
     retangulo_botaovoltar1 = pygame.Rect(posicao_botaovoltar1, (largura_botaovoltar1, altura_botaovoltar1))  
+    corner_radius = 20
     
     
 # Desenha os botões na tela
     
-    pygame.draw.rect(tela, cor_botao, retangulo_botao3)
+    pygame.draw.rect(tela, cor_botao, retangulo_botao3, border_radius=corner_radius)
     texto_retangulo3 = texto_botao3.get_rect(center=retangulo_botao3.center)
     tela.blit(texto_botao3, texto_retangulo3)
 
-    pygame.draw.rect(tela, cor_botao, retangulo_botao4)
+    pygame.draw.rect(tela, cor_botao, retangulo_botao4, border_radius=corner_radius)
     texto_retangulo4 = texto_botao4.get_rect(center=retangulo_botao4.center)
     tela.blit(texto_botao4, texto_retangulo4)
 
-    pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar1)
+    pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar1, border_radius=corner_radius)
     texto_retangulovoltar1 = texto_botaovoltar1.get_rect(center=retangulo_botaovoltar1.center)
     tela.blit(texto_botaovoltar1, texto_retangulovoltar1)
 
@@ -490,6 +497,7 @@ def main(screen):
     altura_botao1 = 80
     posicao_botao1 = (800, 65)
     retangulo_botao1 = pygame.Rect(posicao_botao1, (largura_botao1, altura_botao1))  
+    corner_radius = 100
     
 #BOTÃO DE CONFIG
 
@@ -497,7 +505,8 @@ def main(screen):
     largura_botao2 = 515
     altura_botao2 = 80
     posicao_botao2 = (645, 160)
-    retangulo_botao2 = pygame.Rect(posicao_botao2, (largura_botao2, altura_botao2))  
+    retangulo_botao2 = pygame.Rect(posicao_botao2, (largura_botao2, altura_botao2)) 
+    corner_radius = 100 
 
 
     exibir_tela_login = False
@@ -522,11 +531,11 @@ def main(screen):
 
         tela.blit(imagem, (0, 0))
 
-        pygame.draw.rect(tela, cor_botao, retangulo_botao1)
+        pygame.draw.rect(tela, cor_botao, retangulo_botao1, border_radius=corner_radius)
         texto_retangulo1 = texto_botao1.get_rect(center=retangulo_botao1.center)
         tela.blit(texto_botao1, texto_retangulo1)
 
-        pygame.draw.rect(tela, cor_botao, retangulo_botao2)
+        pygame.draw.rect(tela, cor_botao, retangulo_botao2, border_radius=corner_radius)
         texto_retangulo2 = texto_botao2.get_rect(center=retangulo_botao2.center)
         tela.blit(texto_botao2, texto_retangulo2)
 
