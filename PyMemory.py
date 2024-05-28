@@ -15,6 +15,7 @@ musica_fundo = pygame.mixer.music.play(-1) # Colocando a música para rodar num 
 
 som_clique = pygame.mixer.Sound(os.path.join("assets", "cliquebolha.mp3"))
 som_ligado = True
+musica_ligada = True
 
 def tkinterfunc():
 
@@ -228,6 +229,7 @@ def tela_teste(screen):
 def tela_config(screen):
     
     global som_ligado
+    global musica_ligada
 
     largura = 1200
     altura = 671
@@ -289,8 +291,6 @@ def tela_config(screen):
     img_efeito_on = pygame.transform.scale(img_efeito_on, tamanho)
     img_efeito_off = pygame.transform.scale(img_efeito_off, tamanho)
 
-    musica_ligada= True
-
     def desligar_musica():
         pygame.mixer.music.stop()
 
@@ -317,12 +317,12 @@ def tela_config(screen):
 
         # DESENHA OS BOTÕES DE MÚSICA E DE EFEITO SONORO
 
-        if som_ligado:
-            tela.blit(img_efeito_on, (710, 300))
-        else: 
-            tela.blit(img_efeito_off, (710, 300))
+        img_botao_musica = img_musica_on if musica_ligada else img_musica_off
+        img_botao_efeito = img_efeito_on if som_ligado else img_efeito_off
 
-        
+        tela.blit(img_botao_musica, (270, 300))
+        tela.blit(img_botao_efeito, (710, 300))
+
     exibir_tela_config = False
     exibir_main = False
 
@@ -333,33 +333,24 @@ def tela_config(screen):
                 sys.exit()
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 pos_mouse = pygame.mouse.get_pos()
-                botao_rectmusica = img_musica_on.get_rect(topleft=(270, 300))
-                botao_rectefeito = img_efeito_on.get_rect(topleft=(710, 300))
-                if botao_rectmusica.collidepoint(pos_mouse):
-                    if som_ligado:
-                        som_clique.play()
+                if img_musica_on.get_rect(topleft=(270, 300)).collidepoint(pos_mouse):
+                    som_clique.play() if som_ligado else None
                     if musica_ligada:
                         desligar_musica()
-                        musica_ligada = False
                     else:
                         ligar_musica()
-                        musica_ligada = True
-                if botao_rectefeito.collidepoint(pos_mouse):
+                    musica_ligada = not musica_ligada
+                elif img_efeito_on.get_rect(topleft=(710, 300)).collidepoint(pos_mouse):
                     som_ligado = not som_ligado
-                if retangulo_botaovoltar4.collidepoint(evento.pos):
-                    if som_ligado:
-                        som_clique.play()
-                    exibir_main = True
+                elif retangulo_botaovoltar4.collidepoint(pos_mouse):
+                    som_clique.play() if som_ligado else None
+                    main(screen)
+        
+
+                
         
         
         desenhar_interface()
-
-        if musica_ligada:
-            img_botao_musica = img_musica_on
-        else:
-            img_botao_musica = img_musica_off
-        
-        tela.blit(img_botao_musica, (270, 300))
 
         pygame.display.flip()
 
