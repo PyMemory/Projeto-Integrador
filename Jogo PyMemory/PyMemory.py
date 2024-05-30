@@ -1,9 +1,28 @@
 import pygame
+import random
 import tkinter as tk
 from tkinter import * 
 from tkinter import messagebox
 import mysql.connector
 import os
+import Fase0Teste
+from Fase0Teste import FaseT
+import Fase1
+from Fase1 import Fase1
+import Fase2
+from Fase2 import Fase2
+import Fase3 
+from Fase3 import Fase3
+import Fase4
+from Fase4 import Fase4
+import Fases
+from Fases import JogoMemoria
+import Jogo
+from Jogo import Jogo
+import Operacoes
+from Operacoes import Operacoes
+import PontuaçãoFases 
+from PontuaçãoFases import Pontuacao
 
 pygame.init()
 pygame.mixer.init() # Inicializando a música
@@ -107,21 +126,18 @@ class TkinterFuncionario(Tela):
         # Definir uma função a ser chamada quando uma opção for selecionada
         variable.trace("w", option_selected)
 
-        def confirmar():
-            root.destroy()
-            self.app.exibir_TelaTeste = True
-            self.app.exibir_TkinterFuncionario = False
 
         # Botão de Confirmar 
         my_button = Button(root, text="Confirmar", activebackground="green", activeforeground="white", anchor="center", bg="systembuttonface", bd="2", default="disabled",
             disabledforeground="green", font=("Helvetica", 12), fg="green",justify="center",overrelief="raised",relief="raised",
-            state="normal", takefocus=TRUE, width="10", wraplength="0", command=confirmar)
+            state="normal", takefocus=TRUE, width="10", wraplength="0")
         my_button.pack(pady=10)
 
         root.mainloop()
 
 class TkinterAluno(Tela):
     def run(self):
+
         global som_ligado
         
         def option_selected(*args):
@@ -208,7 +224,7 @@ class TkinterAluno(Tela):
         my_button.pack(pady=10)
 
         root.mainloop()
-
+        
 class TelaTeste(Tela):
     def run(self):
         largura = 1200
@@ -543,7 +559,7 @@ class PyMemoryApp:
                 TkinterAluno(self).run()
             elif self.exibir_TkinterFuncionario:
                 TkinterFuncionario(self).run()
-                             
+                   
 if __name__ == "__main__":
     app = PyMemoryApp()
     app.run()
