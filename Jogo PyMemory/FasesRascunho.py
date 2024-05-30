@@ -3,6 +3,7 @@
 import pygame
 import random
 from Operacoes import Operacoes
+import GerenciadorFases
 
 # Definição de cores
 BRANCO = (255, 255, 255)
@@ -62,8 +63,7 @@ class JogoMemoria:
         self.vitoria = False
 
         # Gerenciador de fases
-        self.gerenciador_fases = gerenciador_fases
-        print("Inicializando JogoMemoria...")
+        self.gerenciador_fases = GerenciadorFases.GerenciadorFases.proxima_fase()
 
     def obter_operacao(self):
         x, y, resposta, operador = self.operacao_atual()
@@ -213,91 +213,118 @@ class JogoMemoria:
                 botao['numero'] = numeros_unicos[i]
                 botao['ativo'] = True
 
-    def mostrar_popup(self):
-        popup_largura = 600
-        popup_altura = 400
-        x_popup = (self.largura_tela - popup_largura) // 2
-        y_popup = (self.altura_tela - popup_altura) // 2
-        
-        fonte = pygame.font.Font('SuperMario256.ttf', 40)
-        texto1 = "Parabens, voce passou!"
-        texto2 = "A proxima fase vai"
-        texto3 = "iniciar em 5 segundos!"
-
-        texto1_render = fonte.render(texto1, True, PRETO)
-        texto2_render = fonte.render(texto2, True, PRETO)
-        texto3_render = fonte.render(texto3, True, PRETO)
-        
-        popup_rect = pygame.Rect(x_popup, y_popup, popup_largura, popup_altura)
-        pygame.draw.rect(self.tela, CINZA, popup_rect)
-        self.tela.blit(texto1_render, (x_popup + 25, y_popup + 50))
-        self.tela.blit(texto2_render, (x_popup + 40, y_popup + 200))
-        self.tela.blit(texto3_render, (x_popup + 25, y_popup + 250))
-        
-        pygame.display.flip()
-        pygame.time.delay(5000)
-        
     def checar_botoes(self, x, y):
         for botao in self.botoes:
             if botao['rect'].collidepoint(x, y) and botao['ativo']:
                 if botao['numero'] == self.resposta:
                     self.mostrar_popup()
-                    pygame.display.quit() #batata
-                    return
                 else:
                     botao['clicado'] = True
 
+    def fechar_fase(self):
+        if self.gerenciador_fases:
+            self.gerenciador_fases()  # Se você tiver um gerenciador de fases, avance para a próxima fase
+        else:
+            pygame.quit()  # Caso contrário, simplesmente encerre o jogo
+        
+    def mostrar_popup(self):
+        # Definindo as dimensões e posições do popup
+        largura_popup = 500
+        altura_popup = 220
+        x_popup = self.largura_tela // 2 - largura_popup // 2
+        y_popup = self.altura_tela // 2 - altura_popup // 2
+        
+        # Criando a superfície do popup e preenchendo com cor de fundo
+        popup_surface = pygame.Surface((largura_popup, altura_popup))
+        popup_surface.fill(CINZA)
+        
+        # Configurações da fonte e do texto
+        fonte = pygame.font.Font('SuperMario256.ttf', 30)
+        texto = fonte.render("Parabens, voce acertou!", True, PRETO)
+        texto2 = fonte.render("Gostaria de passar", True, PRETO)
+        texto3 = fonte.render("para a proxima etapa?", True, PRETO)
+        
+        # Definindo o botão "Sim"
+        largura_botao = 180
+        altura_botao = 50
+        x_botao = largura_popup // 2 - largura_botao // 2
+        y_botao = 150
+        botao_sim = pygame.Rect(560, 400, largura_botao, altura_botao)
+        ret_sim = pygame.Rect(x_botao, y_botao, largura_botao, altura_botao)
+        
+        # Desenhando o botão "Sim" e o texto centralizado
+        pygame.draw.rect(popup_surface, BRANCO, ret_sim)
+        texto_sim = fonte.render("Sim", True, PRETO)
+        texto_sim_rect = texto_sim.get_rect(center=ret_sim.center)
+        
+        # Blitando o popup e os textos na tela
+        self.tela.blit(popup_surface, (x_popup, y_popup))
+        self.tela.blit(texto, (x_popup + largura_popup // 2 - texto.get_width() // 2, y_popup + 20))
+        self.tela.blit(texto2, (x_popup + largura_popup // 2 - texto2.get_width() // 2, y_popup + 70))
+        self.tela.blit(texto3, (x_popup + largura_popup // 2 - texto3.get_width() // 2, y_popup + 110))
+        self.tela.blit(texto_sim, (x_popup + texto_sim_rect.x, y_popup + texto_sim_rect.y))
+        
+        pygame.display.flip()
+        
+        esperando_resposta = True
+        while esperando_resposta:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if botao_sim.collidepoint(event.pos):
+                        self.fechar_fase()  # Chamando o método fechar_fase quando o botão "Sim" é clicado
+                        esperando_resposta = False  # Sair do loop de espera
+                        
     def executar(self):
         while True:
-            try:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.display.quit()
-                        return
-                    elif event.type == pygame.MOUSEBUTTONDOWN:
-                        x, y = pygame.mouse.get_pos()
-                        self.cartao_clicado(x, y)
-                        self.checar_botoes(x, y)
-                    elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_SPACE and len(self.cartao_revelado) == 2:
-                            numero_trocado = int(input("Digite o número para trocar as cartas: "))
-                            self.trocar_cartoes(numero_trocado)
-                        elif event.key == pygame.K_n:
-                            novo_numero = int(input("Digite o novo número: "))
-                            self.numero_escolhido = novo_numero
-                            self.grid = self.criar_grade_cartas()
-                            self.cartoes = self.criar_cartas()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = pygame.mouse.get_pos()
+                    self.cartao_clicado(x, y)
+                    self.checar_botoes(x, y)
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE and len(self.cartao_revelado) == 2:
+                        numero_trocado = int(input("Digite o número para trocar as cartas: "))
+                        self.trocar_cartoes(numero_trocado)
+                    elif event.key == pygame.K_n:
+                        novo_numero = int(input("Digite o novo número: "))
+                        self.numero_escolhido = novo_numero
+                        self.grid = self.criar_grade_cartas()
+                        self.cartoes = self.criar_cartas()
 
-                if self.timer_started and pygame.time.get_ticks() >= self.timer_end:
-                    self.timer_started = False
-                    for carta in self.cartao_revelado:
-                        carta['revelado'] = False
-                    self.cartao_revelado.clear()
+            if self.timer_started and pygame.time.get_ticks() >= self.timer_end:
+                self.timer_started = False
+                for carta in self.cartao_revelado:
+                    carta['revelado'] = False
+                self.cartao_revelado.clear()
 
-                self.tela.fill(VERDE)
-                for carta in self.cartoes:
-                    cor = BRANCO if carta['revelado'] else CINZA
-                    pygame.draw.rect(self.tela, cor, carta['rect'])
-                    if carta['revelado']:
-                        fonte = pygame.font.Font('SuperMario256.ttf', self.tamanho_fonte)
-                        texto = fonte.render(str(carta['numero']), True, VERDE)
-                        texto_rect = texto.get_rect(center=carta['rect'].center)
-                        self.tela.blit(texto, texto_rect)
+            self.tela.fill(VERDE)
+            for carta in self.cartoes:
+                cor = BRANCO if carta['revelado'] else CINZA
+                pygame.draw.rect(self.tela, cor, carta['rect'])
+                if carta['revelado']:
+                    fonte = pygame.font.Font('SuperMario256.ttf', self.tamanho_fonte)
+                    texto = fonte.render(str(carta['numero']), True, VERDE)
+                    texto_rect = texto.get_rect(center=carta['rect'].center)
+                    self.tela.blit(texto, texto_rect)
 
-                # Desenha a tabela de números encontrados
-                self.desenhar_tabela_numeros()
-                
-                # Desenha a operação matemática
-                self.desenhar_operacao_matematica()
+            # Desenha a tabela de números encontrados
+            self.desenhar_tabela_numeros()
+            
+            # Desenha a operação matemática
+            self.desenhar_operacao_matematica()
 
-                # Desenha os botões se a vitória foi alcançada
-                self.desenhar_botoes()
+            # Desenha os botões se a vitória foi alcançada
+            self.desenhar_botoes()
 
-                pygame.display.flip()
-                self.clock.tick(60)
+            pygame.display.flip()
+            self.clock.tick(60)
 
-                # Configura os botões após a vitória
-                if self.vitoria:
-                    self.configurar_botoes()
-            except pygame.error:
-                return
+            # Configura os botões após a vitória
+            if self.vitoria:
+                self.configurar_botoes()

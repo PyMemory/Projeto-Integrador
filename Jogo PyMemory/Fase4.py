@@ -1,3 +1,4 @@
+#Fase4.py
 import Fases
 import Operacoes
 from PontuaçãoFases import Pontuacao
@@ -18,3 +19,4 @@ class Fase4:
 # Criar e executar a fase
 fase4 = Fase4()
 fase4.executar_fase()
+print(fase4.pontos_fase4())

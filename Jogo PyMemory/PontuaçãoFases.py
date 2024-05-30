@@ -1,5 +1,3 @@
-from Fases import JogoMemoria
-
 class Pontuacao:
     def __init__(self, jogo):
         self.jogo = jogo
@@ -19,6 +17,4 @@ class Pontuacao:
         else:
             pontos = 3
         return pontos
-    
-
 
