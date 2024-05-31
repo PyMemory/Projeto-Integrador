@@ -17,6 +17,5 @@ class Fase1:
         return pf1
     
 # Criar e executar a fase
-fase1 = Fase1()
-fase1.executar_fase()
-print(fase1.pontos_fase1())
+#fase1 = Fase1.Fase1()
+#fase1.executar_fase()
