@@ -11,12 +11,11 @@ class Fase3:
 
     def executar_fase(self):        
         self.jm.executar()
-
+        
     def pontos_fase3(self):
         pf3 = self.pf.pontosFase()
         return pf3
     
 # Criar e executar a fase
-fase3 = Fase3()
-fase3.executar_fase()
-print(fase3.pontos_fase3())
+#fase3 = Fase3.Fase3()
+#fase3.executar_fase()
