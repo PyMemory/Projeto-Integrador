@@ -15,8 +15,6 @@ class FaseT:
     def pontos_fase0(self):
         pf0 = self.pf.pontosFase()
         return pf0
-
-faseT = FaseT()
-faseT.executar_fase()
-faseT.pontos_fase0()
-print(faseT.pontos_fase0())
+    
+#faseT = Fase0Teste.FaseT()
+#faseT.executar_fase()
