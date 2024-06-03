@@ -5,24 +5,7 @@ from tkinter import *
 from tkinter import messagebox
 import mysql.connector
 import os
-import Fase0Teste
-from Fase0Teste import FaseT
-import Fase1
-from Fase1 import Fase1
-import Fase2
-from Fase2 import Fase2
-import Fase3 
-from Fase3 import Fase3
-import Fase4
-from Fase4 import Fase4
-import Fases
-from Fases import JogoMemoria
-import Jogo
 from Jogo import Jogo
-import Operacoes
-from Operacoes import Operacoes
-import PontuaçãoFases 
-from PontuaçãoFases import Pontuacao
 
 pygame.init()
 pygame.mixer.init() # Inicializando a música
@@ -47,6 +30,10 @@ class TkinterFuncionario(Tela):
     def run(self):
     
         global som_ligado
+
+        def confirmar():
+            root.destroy()
+            Jogo.jogo()
 
         def option_selected(*args):
             selected_option = variable.get()
@@ -126,11 +113,10 @@ class TkinterFuncionario(Tela):
         # Definir uma função a ser chamada quando uma opção for selecionada
         variable.trace("w", option_selected)
 
-
         # Botão de Confirmar 
         my_button = Button(root, text="Confirmar", activebackground="green", activeforeground="white", anchor="center", bg="systembuttonface", bd="2", default="disabled",
             disabledforeground="green", font=("Helvetica", 12), fg="green",justify="center",overrelief="raised",relief="raised",
-            state="normal", takefocus=TRUE, width="10", wraplength="0")
+            state="normal", takefocus=TRUE, width="10", wraplength="0", command=confirmar)
         my_button.pack(pady=10)
 
         root.mainloop()
@@ -139,6 +125,10 @@ class TkinterAluno(Tela):
     def run(self):
 
         global som_ligado
+
+        def confirmar():
+            root.destroy()
+            Jogo.jogo()
         
         def option_selected(*args):
             selected_option = variable.get()
@@ -220,7 +210,7 @@ class TkinterAluno(Tela):
         # Botão de Confirmar 
         my_button = Button(root, text="Confirmar", activebackground="green", activeforeground="white", anchor="center", bg="systembuttonface", bd="2", default="disabled",
             disabledforeground="green", font=("Helvetica", 18), fg="green",justify="center",overrelief="raised",relief="raised",
-            state="normal", takefocus=TRUE, width="10", wraplength="0")
+            state="normal", takefocus=TRUE, width="10", wraplength="0", command=confirmar)
         my_button.pack(pady=10)
 
         root.mainloop()

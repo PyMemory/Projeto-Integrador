@@ -1,7 +1,7 @@
 #Fases.py
-
 import pygame
 import random
+import os
 from Operacoes import Operacoes
 
 # Definição de cores
@@ -214,22 +214,22 @@ class JogoMemoria:
                 botao['ativo'] = True
 
     def mostrar_popup(self):
-        popup_largura = 600
-        popup_altura = 400
+        popup_largura = 500
+        popup_altura = 300
         x_popup = (self.largura_tela - popup_largura) // 2
         y_popup = (self.altura_tela - popup_altura) // 2
         
-        fonte = pygame.font.Font('SuperMario256.ttf', 40)
-        texto1 = "Parabens, voce passou!"
-        texto2 = "A proxima fase vai"
-        texto3 = "iniciar em 5 segundos!"
+        fonte = pygame.font.Font('SuperMario256.ttf', 30)
+        texto1 = "Parabens, voce acertou!"
+        texto2 = "   A proxima fase   "
+        texto3 = "comeca em 5 segundos!"
 
-        texto1_render = fonte.render(texto1, True, PRETO)
-        texto2_render = fonte.render(texto2, True, PRETO)
-        texto3_render = fonte.render(texto3, True, PRETO)
+        texto1_render = fonte.render(texto1, True, BRANCO)
+        texto2_render = fonte.render(texto2, True, BRANCO)
+        texto3_render = fonte.render(texto3, True, BRANCO)
         
         popup_rect = pygame.Rect(x_popup, y_popup, popup_largura, popup_altura)
-        pygame.draw.rect(self.tela, CINZA, popup_rect)
+        pygame.draw.rect(self.tela, VERDE, popup_rect)
         self.tela.blit(texto1_render, (x_popup + 25, y_popup + 50))
         self.tela.blit(texto2_render, (x_popup + 40, y_popup + 200))
         self.tela.blit(texto3_render, (x_popup + 25, y_popup + 250))
@@ -274,6 +274,7 @@ class JogoMemoria:
                         carta['revelado'] = False
                     self.cartao_revelado.clear()
 
+                
                 self.tela.fill(VERDE)
                 for carta in self.cartoes:
                     cor = BRANCO if carta['revelado'] else CINZA
