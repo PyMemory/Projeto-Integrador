@@ -214,28 +214,6 @@ class TkinterAluno(Tela):
         my_button.pack(pady=10)
 
         root.mainloop()
-        
-class TelaTeste(Tela):
-    def run(self):
-        largura = 1200
-        altura = 671
-        tela = pygame.display.set_mode((largura, altura))
-
-        pygame.display.set_caption("Tela de Teste após o TKINTER")
-        imagem = pygame.image.load(os.path.join("assets", "telalogins.png"))
-        self.screen.blit(imagem, (0, 0))
-
-        cor_texto = (255, 255, 255)
-        
-        fonte = pygame.font.Font(os.path.join("assets","RetroMario-Regular.otf"), 55)
-        
-        while self.app.exibir_TelaTeste:
-            for evento in pygame.event.get():
-                if evento.type == pygame.QUIT:
-                    self.app.running = False
-                    return
-
-                pygame.display.flip()
 
 class TelaConfig(Tela):
     def run(self):
