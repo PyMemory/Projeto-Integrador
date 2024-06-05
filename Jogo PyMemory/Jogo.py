@@ -5,6 +5,7 @@ import Fase1
 import Fase2
 import Fase3
 import Fase4
+import os
 
 class Jogo:
     @staticmethod
@@ -25,19 +26,20 @@ class Jogo:
         altura_tela = 700
         tela = pygame.display.set_mode((largura_tela, altura_tela))
         pygame.display.set_caption("Tela Final")
+        imagem = pygame.image.load(os.path.join("assets", "florestafinal.png"))
         
-        fonte = pygame.font.Font('SuperMario256.ttf', 36) 
-        texto1 = fonte.render("Parabens, voce completou o jogo PyMemory,", True, (0, 0, 0))
-        texto2 = fonte.render(f"Pontuacao: {pontuacao_final}", True, (0, 0, 0))
-        texto3 = fonte.render(f"Classificacao: {classificacao}", True, (0, 0, 0))
-        texto4 = fonte.render(f"aqui esta o seu desempenho:", True, (0, 0, 0))
+        fonte = pygame.font.Font('RetroMario-Regular.otf', 50) 
+        texto1 = fonte.render("Parabéns, você completou o jogo PyMemory,", True, (0, 0, 0))
+        texto2 = fonte.render(f"Pontuação: {pontuacao_final}", True, (0, 0, 0))
+        texto3 = fonte.render(f"Classificação: {classificacao}", True, (0, 0, 0))
+        texto4 = fonte.render(f"este foi o seu desempenho:", True, (0, 0, 0))
         
-        tela.fill((0, 128, 0))
+        tela.blit(imagem, (0, 0))
 
-        tela.blit(texto1, (50, 200))
-        tela.blit(texto4, (50, 250))
-        tela.blit(texto2, (50, 400))
-        tela.blit(texto3, (50, 500))
+        tela.blit(texto1, (150, 180))
+        tela.blit(texto4, (380, 230))
+        tela.blit(texto2, (470, 300))
+        tela.blit(texto3, (400, 350))
 
         pygame.display.flip()
 
