@@ -63,7 +63,6 @@ class JogoMemoria:
 
         # Gerenciador de fases
         self.gerenciador_fases = gerenciador_fases
-        print("Inicializando JogoMemoria...")
 
     def obter_operacao(self):
         x, y, resposta, operador = self.operacao_atual()
