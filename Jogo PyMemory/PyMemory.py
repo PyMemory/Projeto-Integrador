@@ -33,6 +33,7 @@ class TkinterFuncionario(Tela):
 
         def confirmar():
             root.destroy()
+            self.app.stop()
             Jogo.jogo()
 
         def option_selected(*args):
@@ -119,6 +120,8 @@ class TkinterFuncionario(Tela):
             state="normal", takefocus=TRUE, width="10", wraplength="0", command=confirmar)
         my_button.pack(pady=10)
 
+        root.protocol("WM_DELETE_WINDOW", self.app.stop)
+
         root.mainloop()
 
 class TkinterAluno(Tela):
@@ -128,6 +131,7 @@ class TkinterAluno(Tela):
 
         def confirmar():
             root.destroy()
+            self.app.stop()
             Jogo.jogo()
         
         def option_selected(*args):
@@ -212,6 +216,8 @@ class TkinterAluno(Tela):
             disabledforeground="green", font=("Helvetica", 18), fg="green",justify="center",overrelief="raised",relief="raised",
             state="normal", takefocus=TRUE, width="10", wraplength="0", command=confirmar)
         my_button.pack(pady=10)
+
+        root.protocol("WM_DELETE_WINDOW", self.app.stop)
 
         root.mainloop()
 
@@ -527,6 +533,9 @@ class PyMemoryApp:
                 TkinterAluno(self).run()
             elif self.exibir_TkinterFuncionario:
                 TkinterFuncionario(self).run()
+
+    def stop(self):
+        self.running = False
                    
 if __name__ == "__main__":
     app = PyMemoryApp()

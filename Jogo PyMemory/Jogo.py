@@ -5,16 +5,20 @@ import Fase1
 import Fase2
 import Fase3
 import Fase4
+
 import os
+
+VERDE = (0, 128, 0)
+
 
 class Jogo:
     @staticmethod
     def calcular_pontuacao_final(pontos_fase1, pontos_fase2, pontos_fase3, pontos_fase4):
         pontuacao_final = pontos_fase1 + pontos_fase2 + pontos_fase3 + pontos_fase4
         if 30 <= pontuacao_final <= 40:
-            classificacao = "Incrivel"
+            classificacao = "Incrível"
         elif 20 <= pontuacao_final <= 29:
-            classificacao = "Otima"
+            classificacao = "Ótima"
         else:
             classificacao = "Boa"
         return pontuacao_final, classificacao
@@ -25,20 +29,20 @@ class Jogo:
         largura_tela = 1300
         altura_tela = 700
         tela = pygame.display.set_mode((largura_tela, altura_tela))
-        pygame.display.set_caption("Tela Final")
+        pygame.display.set_caption("Fim")
         imagem = pygame.image.load(os.path.join("assets", "florestafinal.png"))
         
         fonte = pygame.font.Font('RetroMario-Regular.otf', 50) 
-        texto1 = fonte.render("Parabéns, você completou o jogo PyMemory,", True, (0, 0, 0))
-        texto2 = fonte.render(f"Pontuação: {pontuacao_final}", True, (0, 0, 0))
-        texto3 = fonte.render(f"Classificação: {classificacao}", True, (0, 0, 0))
-        texto4 = fonte.render(f"este foi o seu desempenho:", True, (0, 0, 0))
+        texto1 = fonte.render("Parabéns você completou o jogo PyMemory,", True, VERDE)
+        texto2 = fonte.render(f"Pontuação: {pontuacao_final}", True, VERDE)
+        texto3 = fonte.render(f"Classificação: {classificacao}", True, VERDE)
+        texto4 = fonte.render(f"este foi o seu desempenho:", True, VERDE)
         
         tela.blit(imagem, (0, 0))
 
         tela.blit(texto1, (150, 180))
         tela.blit(texto4, (380, 230))
-        tela.blit(texto2, (470, 300))
+        tela.blit(texto2, (480, 300))
         tela.blit(texto3, (400, 350))
 
         pygame.display.flip()

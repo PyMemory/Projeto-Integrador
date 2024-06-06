@@ -11,15 +11,17 @@ VERDE = (0, 128, 0)
 CINZA = (192, 192, 192)
 VERMELHO = (255, 0, 0)
 
+
 imagem = pygame.image.load(os.path.join("assets", "florestafases.png"))
 
 class JogoMemoria:
+
     def __init__(self, operacao, gerenciador_fases=None):
         pygame.init()
         self.largura_tela = 1300
         self.altura_tela = 700
         self.espaco_superior = -50  # Ajuste aqui para diminuir mais o espaço acima das cartas
-        self.tela = pygame.display.set_mode((self.largura_tela, self.altura_tela), pygame.RESIZABLE)
+        self.tela = pygame.display.set_mode((self.largura_tela, self.altura_tela))
         pygame.display.set_caption("P Y M E M O R Y")
         self.clock = pygame.time.Clock()
 
@@ -134,7 +136,7 @@ class JogoMemoria:
         return True
 
     def exibir_mensagem_vitoria(self):
-        pygame.display.set_caption("Parabéns! Você venceu!")
+        pygame.display.set_caption("Parabéns, você encontrou todos os pares!")
 
     def atualizar_pontuacao(self):
         self.tentativas += 1
@@ -151,28 +153,14 @@ class JogoMemoria:
                 carta['numero'] = numero
             self.cartao_revelado.clear()
 
-    def desenhar_tabela_numeros(self):
-        # Tamanho e posição da tabela
-        largura_tabela = self.largura_cartao * self.proporcao_tabela_cartao
-        altura_tabela = self.altura_tela
-        x_tabela = self.largura_tela - largura_tabela
-        y_tabela = 0
-        
-        # Desenha o fundo da tabela
-        pygame.draw.rect(self.tela, VERDE, (x_tabela, y_tabela, largura_tabela, altura_tabela))
-        
-        # Configurações do texto
-        fonte = pygame.font.Font('RetroMario-Regular.otf', self.tamanho_fonte_tabela)
-        cor_texto = PRETO
-
     def desenhar_operacao_matematica(self):
         # Define o retângulo branco para a área da operação matemática
         largura_operacao = 600
-        altura_operacao = self.altura_cartao + self.espaco_superior
+        altura_operacao = 100
         x_operacao =  200
-        y_operacao = 10
+        y_operacao = 50
         
-        pygame.draw.rect(self.tela, BRANCO, (x_operacao, y_operacao, largura_operacao, altura_operacao))
+        pygame.draw.rect(self.tela, CINZA, (x_operacao, y_operacao, largura_operacao, altura_operacao))
         
         # Desenha a operação matemática atual na tela
         fonte = pygame.font.Font('RetroMario-Regular.otf', self.tamanho_fonte_operacao)
@@ -286,8 +274,7 @@ class JogoMemoria:
                         texto_rect = texto.get_rect(center=carta['rect'].center)
                         self.tela.blit(texto, texto_rect)
 
-                # Desenha a tabela de números encontrados
-                self.desenhar_tabela_numeros()
+                
                 
                 # Desenha a operação matemática
                 self.desenhar_operacao_matematica()
