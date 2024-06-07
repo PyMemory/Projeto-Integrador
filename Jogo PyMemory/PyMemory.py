@@ -463,7 +463,7 @@ class Inicio(Tela):
         fonte = pygame.font.Font(os.path.join("assets","RetroMario-Regular.otf"), 55)  
 
         texto_botao1 = fonte.render("LOGIN", True, cor_texto)  
-        largura_botao1 = 190
+        largura_botao1 = 200
         altura_botao1 = 80
         posicao_botao1 = (800, 65)
         retangulo_botao1 = pygame.Rect(posicao_botao1, (largura_botao1, altura_botao1))  
@@ -478,6 +478,16 @@ class Inicio(Tela):
         retangulo_botao2 = pygame.Rect(posicao_botao2, (largura_botao2, altura_botao2)) 
         corner_radius = 100 
 
+    #BOTÃO DE TUTORIAL
+
+        texto_botao3 = fonte.render("TUTORIAL", True, cor_texto)
+        largura_botao3 = 330
+        altura_botao3 = 80
+        posicao_botao3 = (730, 260)
+        retangulo_botao3 = pygame.Rect(posicao_botao3, (largura_botao3, altura_botao3)) 
+        corner_radius = 100
+
+
         while self.app.exibir_Inicio:
 
             tela.blit(imagem, (0, 0))
@@ -489,6 +499,10 @@ class Inicio(Tela):
             pygame.draw.rect(tela, cor_botao, retangulo_botao2, border_radius=corner_radius)
             texto_retangulo2 = texto_botao2.get_rect(center=retangulo_botao2.center)
             tela.blit(texto_botao2, texto_retangulo2)
+
+            pygame.draw.rect(tela, cor_botao, retangulo_botao3, border_radius=corner_radius)
+            texto_retangulo3 = texto_botao3.get_rect(center=retangulo_botao3.center)
+            tela.blit(texto_botao3, texto_retangulo3)
 
             pygame.display.flip()
 
@@ -507,7 +521,59 @@ class Inicio(Tela):
                         self.app.exibir_Inicio = False
                         if som_ligado:
                             som_clique.play()
+                    elif retangulo_botao3.collidepoint(evento.pos):
+                        self.app.exibir_TelaTutorial = True
+                        self.app.exibir_Inicio = False
+                        if som_ligado:
+                            som_clique.play()
 
+            pygame.display.flip()
+
+class TelaTutorial(Tela):
+    def run(self):
+        global som_ligado
+        global musica_ligada
+
+        largura = 1200
+        altura = 671
+        tela = pygame.display.set_mode((largura, altura))
+        pygame.display.set_caption("TUTORIAL PYMEMORY")
+        imagem = pygame.image.load(os.path.join("assets", "tutorial.png"))
+        self.screen.blit(imagem, (0, 0))
+
+        cor_botao = (0, 100, 0)  
+        cor_texto = (255, 255, 255)  
+        
+        fonte = pygame.font.Font(os.path.join("assets","RetroMario-Regular.otf"), 55)
+
+        texto_botaovoltar = fonte.render("VOLTAR", True, cor_texto) 
+        largura_botaovoltar = 250
+        altura_botaovoltar = 65
+        posicao_botaovoltar = (5, 5)
+        retangulo_botaovoltar = pygame.Rect(posicao_botaovoltar, (largura_botaovoltar, altura_botaovoltar))
+        corner_radius = 100
+
+
+        pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar, border_radius=corner_radius)
+        texto_retangulovoltar = texto_botaovoltar.get_rect(center=retangulo_botaovoltar.center)
+        tela.blit(texto_botaovoltar, texto_retangulovoltar)
+
+
+        pygame.display.flip()
+        
+        while self.app.exibir_TelaTutorial:
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    self.app.running = False
+                    return
+                elif evento.type == pygame.MOUSEBUTTONDOWN:
+                    pos_mouse = pygame.mouse.get_pos()
+                    if retangulo_botaovoltar.collidepoint(pos_mouse):
+                        som_clique.play() if som_ligado else None
+                        self.app.exibir_Inicio = True
+                        self.app.exibir_TelaTutorial = False
+                    
+        
             pygame.display.flip()
 
 class PyMemoryApp:
@@ -520,6 +586,7 @@ class PyMemoryApp:
         self.exibir_TelaConfig = False
         self.exibir_TkinterAluno = False
         self.exibir_TkinterFuncionario = False
+        self.exibir_TelaTutorial = False
 
     def run(self):
         while self.running:
@@ -533,6 +600,8 @@ class PyMemoryApp:
                 TkinterAluno(self).run()
             elif self.exibir_TkinterFuncionario:
                 TkinterFuncionario(self).run()
+            elif self.exibir_TelaTutorial:
+                TelaTutorial(self).run()
 
     def stop(self):
         self.running = False
