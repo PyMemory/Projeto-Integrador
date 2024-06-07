@@ -16,7 +16,7 @@ imagem = pygame.image.load(os.path.join("assets", "florestafases.png"))
 
 class JogoMemoria:
 
-    def __init__(self, operacao, gerenciador_fases=None):
+    def __init__(self, operacao, gerenciador_fases=None, ultima_fase = False):
         pygame.init()
         self.largura_tela = 1300
         self.altura_tela = 700
@@ -67,6 +67,7 @@ class JogoMemoria:
 
         # Gerenciador de fases
         self.gerenciador_fases = gerenciador_fases
+        self.ultima_fase = ultima_fase
 
     def obter_operacao(self):
         x, y, resposta, operador = self.operacao_atual()
@@ -202,17 +203,13 @@ class JogoMemoria:
                 botao['numero'] = numeros_unicos[i]
                 botao['ativo'] = True
 
-    def mostrar_popup(self):
+    def mostrar_popup(self, texto1, texto2, texto3):
         popup_largura = 500
         popup_altura = 300
         x_popup = (self.largura_tela - popup_largura) // 2
         y_popup = (self.altura_tela - popup_altura) // 2
         
         fonte = pygame.font.Font('RetroMario-Regular.otf', 40)
-        texto1 = "Parabéns, você acertou!"
-        texto2 = "   A próxima fase   "
-        texto3 = "começa em 5 segundos!"
-
         texto1_render = fonte.render(texto1, True, BRANCO)
         texto2_render = fonte.render(texto2, True, BRANCO)
         texto3_render = fonte.render(texto3, True, BRANCO)
@@ -225,12 +222,15 @@ class JogoMemoria:
         
         pygame.display.flip()
         pygame.time.delay(5000)
-        
+
     def checar_botoes(self, x, y):
         for botao in self.botoes:
             if botao['rect'].collidepoint(x, y) and botao['ativo']:
                 if botao['numero'] == self.resposta:
-                    self.mostrar_popup()
+                    if self.ultima_fase:
+                        self.mostrar_popup("Parabéns, você acertou!", "   Você concluiu    ", "    o jogo PyMemory!   ")
+                    else:
+                        self.mostrar_popup("Parabéns, você acertou!", "   A próxima fase   ", "começa em 5 segundos!")
                     pygame.display.quit() #batata
                     return
                 else:

@@ -6,7 +6,7 @@ from PontuaçãoFases import Pontuacao
 class Fase4:
     def __init__(self):
         self.op = Operacoes.Operacoes()
-        self.jm = Fases.JogoMemoria(operacao=self.op.divisao)
+        self.jm = Fases.JogoMemoria(operacao=self.op.divisao, ultima_fase=True)
         self.pf = Pontuacao(self.jm)
 
     def executar_fase(self):        
