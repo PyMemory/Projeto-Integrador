@@ -231,7 +231,7 @@ class JogoMemoria:
                         self.mostrar_popup("Parabéns, você acertou!", "  ", "  ")
                     else:
                         self.mostrar_popup("Parabéns, você acertou!", "       A próxima fase    ", "  começa em 5 segundos!")
-                    pygame.display.quit() #batata
+                    pygame.display.quit() 
                     return
                 else:
                     botao['clicado'] = True
