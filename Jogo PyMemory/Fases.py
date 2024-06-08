@@ -164,7 +164,7 @@ class JogoMemoria:
         pygame.draw.rect(self.tela, CINZA, (x_operacao, y_operacao, largura_operacao, altura_operacao))
         
         # Desenha a operação matemática atual na tela
-        fonte = pygame.font.Font('RetroMario-Regular.otf', self.tamanho_fonte_operacao)
+        fonte = pygame.font.Font(os.path.join("assets", 'RetroMario-Regular.otf'), self.tamanho_fonte_operacao)
         cor_texto = PRETO
         texto_operacao = f"{self.x} {self.operador} {self.y} = ?"
         texto = fonte.render(texto_operacao, True, cor_texto)
@@ -187,7 +187,7 @@ class JogoMemoria:
 
     def desenhar_botoes(self):
         if self.vitoria:
-            fonte = pygame.font.Font('RetroMario-Regular.otf', self.tamanho_fonte_tabela)
+            fonte = pygame.font.Font(os.path.join("assets",'RetroMario-Regular.otf'), self.tamanho_fonte_tabela)
             for botao in self.botoes:
                 cor_botao = VERMELHO if botao['clicado'] else BRANCO
                 pygame.draw.rect(self.tela, cor_botao, botao['rect'], border_radius=20)
@@ -209,7 +209,7 @@ class JogoMemoria:
         x_popup = (self.largura_tela - popup_largura) // 2
         y_popup = (self.altura_tela - popup_altura) // 2
         
-        fonte = pygame.font.Font('RetroMario-Regular.otf', 40)
+        fonte = pygame.font.Font(os.path.join("assets",'RetroMario-Regular.otf', 40))
         texto1_render = fonte.render(texto1, True, BRANCO)
         texto2_render = fonte.render(texto2, True, BRANCO)
         texto3_render = fonte.render(texto3, True, BRANCO)
@@ -269,7 +269,7 @@ class JogoMemoria:
                     cor = BRANCO if carta['revelado'] else CINZA
                     pygame.draw.rect(self.tela, cor, carta['rect'])
                     if carta['revelado']:
-                        fonte = pygame.font.Font('RetroMario-Regular.otf', self.tamanho_fonte)
+                        fonte = pygame.font.Font(os.path.join("assets",'RetroMario-Regular.otf'), self.tamanho_fonte)
                         texto = fonte.render(str(carta['numero']), True, VERDE)
                         texto_rect = texto.get_rect(center=carta['rect'].center)
                         self.tela.blit(texto, texto_rect)

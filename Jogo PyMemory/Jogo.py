@@ -31,7 +31,7 @@ class Jogo:
         pygame.display.set_caption("Fim")
         imagem = pygame.image.load(os.path.join("assets", "florestafinal.png"))
         
-        fonte = pygame.font.Font('RetroMario-Regular.otf', 50) 
+        fonte = pygame.font.Font(os.path.join("assets",'RetroMario-Regular.otf'), 50) 
         texto1 = fonte.render("Parabéns você completou o jogo PyMemory,", True, VERDE)
         texto2 = fonte.render(f"Pontuação: {pontuacao_final}", True, VERDE)
         texto3 = fonte.render(f"Classificação: {classificacao}", True, VERDE)
