@@ -5,7 +5,6 @@ import Fase1
 import Fase2
 import Fase3
 import Fase4
-
 import os
 
 VERDE = (0, 128, 0)
@@ -37,6 +36,9 @@ class Jogo:
         texto2 = fonte.render(f"Pontuação: {pontuacao_final}", True, VERDE)
         texto3 = fonte.render(f"Classificação: {classificacao}", True, VERDE)
         texto4 = fonte.render(f"este foi o seu desempenho:", True, VERDE)
+
+        cor_botao = (0, 100, 0)  
+        cor_texto = (255, 255, 255)
         
         tela.blit(imagem, (0, 0))
 

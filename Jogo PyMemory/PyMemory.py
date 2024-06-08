@@ -16,7 +16,7 @@ musica_fundo = pygame.mixer.music.play(-1) # Colocando a música para rodar num 
 
 som_clique = pygame.mixer.Sound(os.path.join("assets", "cliquebolha.mp3"))
 som_ligado = True
-musica_ligada = True
+musica_ligada = True 
 
 class Tela:
     def __init__(self, app):
