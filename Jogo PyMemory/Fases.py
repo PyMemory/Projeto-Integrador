@@ -181,7 +181,7 @@ class JogoMemoria:
         botoes = []
         for i in range(5):
             y = y_base + i * (altura_botao + espacamento)
-            botao = pygame.Rect(x_base, y, largura_botao, altura_botao)
+            botao = pygame.Rect(x_base, y, largura_botao, altura_botao, border_radius=20)
             botoes.append({'rect': botao, 'numero': None, 'ativo': False, 'clicado': False})
         return botoes
 
@@ -190,7 +190,7 @@ class JogoMemoria:
             fonte = pygame.font.Font('RetroMario-Regular.otf', self.tamanho_fonte_tabela)
             for botao in self.botoes:
                 cor_botao = VERMELHO if botao['clicado'] else BRANCO
-                pygame.draw.rect(self.tela, cor_botao, botao['rect'])
+                pygame.draw.rect(self.tela, cor_botao, botao['rect'], border_radius=20)
                 if botao['ativo']:
                     texto = fonte.render(str(botao['numero']), True, PRETO)
                     texto_rect = texto.get_rect(center=botao['rect'].center)
@@ -204,7 +204,7 @@ class JogoMemoria:
                 botao['ativo'] = True
 
     def mostrar_popup(self, texto1, texto2, texto3):
-        popup_largura = 500
+        popup_largura = 490
         popup_altura = 300
         x_popup = (self.largura_tela - popup_largura) // 2
         y_popup = (self.altura_tela - popup_altura) // 2
@@ -215,7 +215,7 @@ class JogoMemoria:
         texto3_render = fonte.render(texto3, True, BRANCO)
         
         popup_rect = pygame.Rect(x_popup, y_popup, popup_largura, popup_altura)
-        pygame.draw.rect(self.tela, VERDE, popup_rect)
+        pygame.draw.rect(self.tela, VERDE, popup_rect, border_radius=20)
         self.tela.blit(texto1_render, (x_popup + 25, y_popup + 50))
         self.tela.blit(texto2_render, (x_popup + 40, y_popup + 200))
         self.tela.blit(texto3_render, (x_popup + 25, y_popup + 250))
@@ -228,9 +228,9 @@ class JogoMemoria:
             if botao['rect'].collidepoint(x, y) and botao['ativo']:
                 if botao['numero'] == self.resposta:
                     if self.ultima_fase:
-                        self.mostrar_popup("Parabéns, você acertou!", "   Você concluiu    ", "    o jogo PyMemory!   ")
+                        self.mostrar_popup("Parabéns, você acertou!", "  ", "  ")
                     else:
-                        self.mostrar_popup("Parabéns, você acertou!", "   A próxima fase   ", "começa em 5 segundos!")
+                        self.mostrar_popup("Parabéns, você acertou!", "       A próxima fase    ", "  começa em 5 segundos!")
                     pygame.display.quit() #batata
                     return
                 else:
