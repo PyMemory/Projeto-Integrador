@@ -12,7 +12,7 @@ CINZA = (192, 192, 192)
 VERMELHO = (255, 0, 0)
 
 
-imagem = pygame.image.load("florestafases.png")
+imagem = pygame.image.load(os.path.join("assets","florestafases.png"))
 
 class JogoMemoria:
 
