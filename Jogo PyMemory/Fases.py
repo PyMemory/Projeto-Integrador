@@ -264,7 +264,7 @@ class JogoMemoria:
                     self.cartao_revelado.clear()
 
                 
-                self.tela.blit(imagem, (0, 0))
+                self.tela.fill(VERDE)
                 for carta in self.cartoes:
                     cor = BRANCO if carta['revelado'] else CINZA
                     pygame.draw.rect(self.tela, cor, carta['rect'])
