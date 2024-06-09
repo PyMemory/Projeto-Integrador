@@ -209,7 +209,7 @@ class JogoMemoria:
         x_popup = (self.largura_tela - popup_largura) // 2
         y_popup = (self.altura_tela - popup_altura) // 2
         
-        fonte = pygame.font.Font(os.path.join("assets",'RetroMario-Regular.otf', 40))
+        fonte = pygame.font.Font(os.path.join("assets",'RetroMario-Regular.otf'), 40)
         texto1_render = fonte.render(texto1, True, BRANCO)
         texto2_render = fonte.render(texto2, True, BRANCO)
         texto3_render = fonte.render(texto3, True, BRANCO)
