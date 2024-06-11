@@ -26,201 +26,6 @@ class Tela:
     def run(self):
         pass
 
-class TkinterFuncionario(Tela):
-    def run(self):
-    
-        global som_ligado
-
-        def confirmar():
-            root.destroy()
-            self.app.stop()
-            Jogo.jogo()
-
-        def option_selected(*args):
-            selected_option = variable.get()
-        # Aqui você pode adicionar o código para lidar com a opção selecionada, como realizar uma consulta ao banco de dados para obter mais informações sobre a opção selecionada.
-
-        def carregar_opcoes():
-            try:
-                # Conectando ao banco de dados
-                conexao = mysql.connector.connect(
-                    host="pi-2024-omateocortez.c.aivencloud.com",
-                    port="22705",
-                    user="avnadmin",
-                    password="AVNS_6u-r-XwHHM_Ryaqe3ZP",
-                    database="PyMemoryDB"
-                )
-
-                cursor = conexao.cursor()
-
-                # Consulta SQL para selecionar os nomes dos alunos e suas turmas da tabela tb_alunos
-                cursor.execute("SELECT nomeFunc, turmaFunc FROM tb_funcionarios ORDER BY nomeFunc")
-                resultado = cursor.fetchall()
-
-                # Atualizando as opções no menu suspenso com os nomes dos alunos e suas turmas
-                opcoes.clear()
-                for row in resultado:
-                    opcao = f"{row[0]} - {row[1]}"  # Concatenando o nome do aluno e sua turma
-                    opcoes.append(opcao)
-
-                variable.set(opcoes[0])
-
-                cursor.close()
-                conexao.close()
-
-            except mysql.connector.Error as error:
-                messagebox.showerror("Erro", f"Erro ao conectar ao banco de dados: {error}")
-
-
-        # Criando a janela
-        root = tk.Tk()
-        root.title("Login")
-        largura = 500
-        altura = 300
-        root.configure(bg="green")
-
-        # Centralizando a janela na tela
-        largura_screen = root.winfo_screenwidth()
-        altura_screen = root.winfo_screenheight()
-        posx = largura_screen/2 - largura/2
-        posy = altura_screen/2 - altura/2
-        root.geometry("%dx%d+%d+%d" % (largura, altura, posx, posy))
-
-        # Rótulo Login
-        my_label = Label (root, text="LOGIN", font=("Comic Sans MS", 38,), fg="white", bg="green")
-        my_label.pack(pady=10)
-
-        my_label = Label(root, text="SELECIONE O SEU NOME E SUA TURMA", font=("Helvetica", 15,), fg="white", bg="green")
-        my_label.pack(pady=10)
-        
-
-        # Permitindo o redimensionamento horizontal, mas não vertical
-        root.resizable(False, False)
-
-        # Lista vazia para armazenar as opções do menu suspenso
-        opcoes = []
-
-        # Variável para armazenar a opção selecionada
-        variable = tk.StringVar(root)
-
-        # Carregar as opções do banco de dados
-        carregar_opcoes()
-
-        # Criar o menu suspenso
-        dropdown = tk.OptionMenu(root, variable, *opcoes)
-        dropdown.pack(pady=10)
-        dropdown.config(font=("Helvetica", 20))  # Muda o tamanho da fonte
-
-        # Definir uma função a ser chamada quando uma opção for selecionada
-        variable.trace("w", option_selected)
-
-        # Botão de Confirmar 
-        my_button = Button(root, text="Confirmar", activebackground="green", activeforeground="white", anchor="center", bg="systembuttonface", bd="2", default="disabled",
-            disabledforeground="green", font=("Helvetica", 12), fg="green",justify="center",overrelief="raised",relief="raised",
-            state="normal", takefocus=TRUE, width="10", wraplength="0", command=confirmar)
-        my_button.pack(pady=10)
-
-        root.protocol("WM_DELETE_WINDOW", self.app.stop)
-
-        root.mainloop()
-
-class TkinterAluno(Tela):
-    def run(self):
-
-        global som_ligado
-
-        def confirmar():
-            root.destroy()
-            self.app.stop()
-            Jogo.jogo()
-        
-        def option_selected(*args):
-            selected_option = variable.get()
-        # Aqui você pode adicionar o código para lidar com a opção selecionada, como realizar uma consulta ao banco de dados para obter mais informações sobre a opção selecionada.
-
-        def carregar_opcoes():
-            try:
-                # Conectando ao banco de dados
-                conexao = mysql.connector.connect(
-                    host="pi-2024-omateocortez.c.aivencloud.com",
-                    port="22705",
-                    user="avnadmin",
-                    password="AVNS_6u-r-XwHHM_Ryaqe3ZP",
-                    database="PyMemoryDB"
-                )
-
-                cursor = conexao.cursor()
-
-                # Consulta SQL para selecionar os nomes dos alunos e suas turmas da tabela tb_alunos
-                cursor.execute("SELECT nomeAluno, turmaAluno FROM tb_alunos ORDER BY turmaAluno")
-                resultado = cursor.fetchall()
-
-                # Atualizando as opções no menu suspenso com os nomes dos alunos e suas turmas
-                opcoes.clear()
-                for row in resultado:
-                    opcao = f"{row[0]} - {row[1]}"  # Concatenando o nome do aluno e sua turma
-                    opcoes.append(opcao)
-
-                variable.set(opcoes[0])
-
-                cursor.close()
-                conexao.close()
-
-            except mysql.connector.Error as error:
-                messagebox.showerror("Erro", f"Erro ao conectar ao banco de dados: {error}")
-
-        # Criando a janela
-        root = tk.Tk()
-        root.title("Login")
-        largura = 500
-        altura = 300
-        root.configure(bg="green")
-
-        # Centralizando a janela na tela
-        largura_screen = root.winfo_screenwidth()
-        altura_screen = root.winfo_screenheight()
-        posx = largura_screen/2 - largura/2
-        posy = altura_screen/2 - altura/2
-        root.geometry("%dx%d+%d+%d" % (largura, altura, posx, posy))
-
-        # Rótulo Login
-        my_label = Label (root, text="LOGIN", font=("Comic Sans MS", 38,), fg="white", bg="green")
-        my_label.pack(pady=10)
-
-        my_label = Label(root, text="SELECIONE O SEU NOME E SUA TURMA", font=("Helvetica", 15,), fg="white", bg="green")
-        my_label.pack(pady=10)
-        
-
-        # Permitindo o redimensionamento horizontal, mas não vertical
-        root.resizable(False, False)
-
-        # Lista vazia para armazenar as opções do menu suspenso
-        opcoes = []
-
-        # Variável para armazenar a opção selecionada
-        variable = tk.StringVar(root)
-
-        # Carregar as opções do banco de dados
-        carregar_opcoes()
-
-        # Criar o menu suspenso
-        dropdown = tk.OptionMenu(root, variable, *opcoes)
-        dropdown.pack(pady=10)
-        dropdown.config(font=("Helvetica", 20))  # Muda o tamanho da fonte
-
-        # Definir uma função a ser chamada quando uma opção for selecionada
-        variable.trace("w", option_selected)
-            
-        # Botão de Confirmar 
-        my_button = Button(root, text="Confirmar", activebackground="green", activeforeground="white", anchor="center", bg="systembuttonface", bd="2", default="disabled",
-            disabledforeground="green", font=("Helvetica", 18), fg="green",justify="center",overrelief="raised",relief="raised",
-            state="normal", takefocus=TRUE, width="10", wraplength="0", command=confirmar)
-        my_button.pack(pady=10)
-
-        root.protocol("WM_DELETE_WINDOW", self.app.stop)
-
-        root.mainloop()
-
 class TelaConfig(Tela):
     def run(self):
         global som_ligado
@@ -350,94 +155,6 @@ class TelaConfig(Tela):
 
             pygame.display.flip()
 
-class TelaLogin(Tela):
-    def run(self):
-        global som_ligado  
-
-        largura = 1200
-        altura = 671
-        tela = pygame.display.set_mode((largura, altura))
-        pygame.display.set_caption("Tela de Login")
-        imagem = pygame.image.load(os.path.join("assets","telalogins.png"))
-        self.screen.blit(imagem, (0, 0))
-
-        cor_botao = (0, 100, 0)  
-        cor_texto = (255, 255, 255)  
-
-        fonte = pygame.font.Font(os.path.join("assets", "RetroMario-Regular.otf"), 55)
-    
-
-    #BOTÃO DE LOGIN DE ALUNO
-
-
-        texto_botao3 = fonte.render("ALUNO", True, cor_texto) 
-        largura_botao3 = 215
-        altura_botao3 = 80
-        posicao_botao3 = (500, 240)
-        retangulo_botao3 = pygame.Rect(posicao_botao3, (largura_botao3, altura_botao3))
-        corner_radius = 100  
-
-
-    #BOTÃO DE LOGIN FUNCIONÁRIO
-
-        texto_botao4 = fonte.render("FUNCIONÁRIO", True, cor_texto) 
-        largura_botao4 = 400
-        altura_botao4 = 80
-        posicao_botao4 = (410, 350)
-        retangulo_botao4 = pygame.Rect(posicao_botao4, (largura_botao4, altura_botao4)) 
-        corner_radius = 100
-
-    #BOTÃO DE VOLTAR
-
-        texto_botaovoltar1 = fonte.render("VOLTAR", True, cor_texto) 
-        largura_botaovoltar1 = 250
-        altura_botaovoltar1 = 65
-        posicao_botaovoltar1 = (5, 5)
-        retangulo_botaovoltar1 = pygame.Rect(posicao_botaovoltar1, (largura_botaovoltar1, altura_botaovoltar1))  
-        corner_radius = 100
-        
-        
-    # Desenha os botões na tela
-        
-        pygame.draw.rect(tela, cor_botao, retangulo_botao3, border_radius=corner_radius)
-        texto_retangulo3 = texto_botao3.get_rect(center=retangulo_botao3.center)
-        tela.blit(texto_botao3, texto_retangulo3)
-
-        pygame.draw.rect(tela, cor_botao, retangulo_botao4, border_radius=corner_radius)
-        texto_retangulo4 = texto_botao4.get_rect(center=retangulo_botao4.center)
-        tela.blit(texto_botao4, texto_retangulo4)
-
-        pygame.draw.rect(tela, cor_botao, retangulo_botaovoltar1, border_radius=corner_radius)
-        texto_retangulovoltar1 = texto_botaovoltar1.get_rect(center=retangulo_botaovoltar1.center)
-        tela.blit(texto_botaovoltar1, texto_retangulovoltar1)
-
-    # Atualiza a tela
-        pygame.display.flip()
-
-        while self.app.exibir_TelaLogin:
-            for evento in pygame.event.get():
-                if evento.type == pygame.QUIT:
-                    self.app.running = False
-                    return
-                elif evento.type == pygame.MOUSEBUTTONDOWN:
-                    if retangulo_botao3.collidepoint(evento.pos):
-                        self.app.exibir_TkinterAluno = True
-                        self.app.exibir_TelaLogin = False
-                        if som_ligado:
-                            som_clique.play()
-                    elif retangulo_botao4.collidepoint(evento.pos):
-                        self.app.exibir_TkinterFuncionario = True
-                        self.app.exibir_TelaLogin = False
-                        if som_ligado:
-                            som_clique.play()
-                    elif retangulo_botaovoltar1.collidepoint(evento.pos):
-                        self.app.exibir_Inicio = True
-                        self.app.exibir_TelaLogin = False
-                        if som_ligado:
-                            som_clique.play()
-                    
-            pygame.display.flip()
-
 class Inicio(Tela):
     def run(self):
 
@@ -462,8 +179,8 @@ class Inicio(Tela):
         
         fonte = pygame.font.Font(os.path.join("assets","RetroMario-Regular.otf"), 55)  
 
-        texto_botao1 = fonte.render("LOGIN", True, cor_texto)  
-        largura_botao1 = 200
+        texto_botao1 = fonte.render("JOGAR", True, cor_texto)  
+        largura_botao1 = 215
         altura_botao1 = 80
         posicao_botao1 = (800, 65)
         retangulo_botao1 = pygame.Rect(posicao_botao1, (largura_botao1, altura_botao1))  
@@ -512,7 +229,7 @@ class Inicio(Tela):
                     return
                 elif evento.type == pygame.MOUSEBUTTONDOWN:
                     if retangulo_botao1.collidepoint(evento.pos):
-                        self.app.exibir_TelaLogin = True
+                        Jogo.jogo()
                         self.app.exibir_Inicio = False
                         if som_ligado:
                             som_clique.play()
@@ -582,24 +299,15 @@ class PyMemoryApp:
         self.screen = pygame.display.set_mode((1200,671))
         self.running = True
         self.exibir_Inicio = True
-        self.exibir_TelaLogin = False
         self.exibir_TelaConfig = False
-        self.exibir_TkinterAluno = False
-        self.exibir_TkinterFuncionario = False
         self.exibir_TelaTutorial = False
 
     def run(self):
         while self.running:
             if self.exibir_Inicio:
                 Inicio(self).run()
-            elif self.exibir_TelaLogin:
-                TelaLogin(self).run()
             elif self.exibir_TelaConfig:
                 TelaConfig(self).run()
-            elif self.exibir_TkinterAluno:
-                TkinterAluno(self).run()
-            elif self.exibir_TkinterFuncionario:
-                TkinterFuncionario(self).run()
             elif self.exibir_TelaTutorial:
                 TelaTutorial(self).run()
 
